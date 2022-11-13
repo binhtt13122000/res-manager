@@ -1,5 +1,5 @@
 import { CacheProvider, EmotionCache } from "@emotion/react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, SxProps, ThemeProvider } from "@mui/material";
 import createEmotionCache from "utils/createEmotionCache";
 import lightTheme from "styles/theme/lightTheme";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
@@ -17,6 +17,17 @@ const clientSideEmotionCache = createEmotionCache();
 
 type AppWithEmotionCache = AppPropsWithLayout & {
     emotionCache: EmotionCache;
+};
+
+export const popperSx: SxProps = {
+    "& .MuiPickersCalendarHeader-labelContainer": {
+        minHeight: 50,
+        fontSize: 14,
+    },
+    // "& .MuiDayPicker-header span": {
+    //     minHeight: 50,
+    //     fontSize: 60,
+    // },
 };
 
 function MyApp({

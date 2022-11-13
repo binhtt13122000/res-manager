@@ -9,7 +9,7 @@ export interface ISwitchBase<T extends FieldValues> extends SwitchProps {
 const SwitchBase = <T extends {}>(props: ISwitchBase<T>) => {
     const { control, name, label, isreadonly, ...rest } = props;
     return (
-        <Stack direction="row" spacing={0}>
+        <Stack direction="row" alignItems={"center"} spacing={0}>
             <Typography
                 sx={{
                     p: 1,

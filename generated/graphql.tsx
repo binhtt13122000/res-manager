@@ -10191,32 +10191,6 @@ export type Worksession_Variance_Fields = {
     updaterid?: Maybe<Scalars["Float"]>;
 };
 
-export type CreateAccountMutationMutationVariables = Exact<{
-    avatar?: InputMaybe<Scalars["String"]>;
-    email?: InputMaybe<Scalars["String"]>;
-    fullname?: InputMaybe<Scalars["String"]>;
-    password?: InputMaybe<Scalars["String"]>;
-    phone?: InputMaybe<Scalars["String"]>;
-    roleid?: InputMaybe<Scalars["Int"]>;
-    status?: InputMaybe<Scalars["user_status"]>;
-    username?: InputMaybe<Scalars["String"]>;
-}>;
-
-export type CreateAccountMutationMutation = {
-    __typename?: "mutation_root";
-    insert_account_one?: { __typename?: "account"; id: number } | null;
-};
-
-export type DeleteAccountMutationMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    status?: InputMaybe<Scalars["user_status"]>;
-}>;
-
-export type DeleteAccountMutationMutation = {
-    __typename?: "mutation_root";
-    update_account_by_pk?: { __typename?: "account"; id: number } | null;
-};
-
 export type EmailExistQueryQueryVariables = Exact<{
     _eq?: InputMaybe<Scalars["String"]>;
 }>;
@@ -10268,60 +10242,96 @@ export type UpdateAccountWithNoPassMutationMutation = {
     update_account_by_pk?: { __typename?: "account"; id: number } | null;
 };
 
-export type CreateLocationMutationVariables = Exact<{
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["basic_status"]>;
-}>;
-
-export type CreateLocationMutation = {
-    __typename?: "mutation_root";
-    insert_location_one?: {
-        __typename?: "location";
-        id: number;
-        name: string;
-        status?: any | null;
-    } | null;
-};
-
-export type DeleteLocationMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["basic_status"]>;
-}>;
-
-export type DeleteLocationMutation = {
-    __typename?: "mutation_root";
-    update_location_by_pk?: {
-        __typename?: "location";
-        id: number;
-        name: string;
-        status?: any | null;
-    } | null;
-};
-
-export type GetLocationQueryVariables = Exact<{
+export type GetCheckQueryVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
 }>;
 
-export type GetLocationQuery = {
+export type GetCheckQuery = {
     __typename?: "query_root";
-    location_by_pk?: { __typename?: "location"; status?: any | null } | null;
+    check_by_pk?: {
+        __typename?: "check";
+        accountid: number;
+        checkno: string;
+        cover?: number | null;
+        creationtime: any;
+        creatorid: number;
+        guestname?: string | null;
+        id: number;
+        note?: string | null;
+        runningsince: any;
+        shiftid: number;
+        status: any;
+        subtotal: number;
+        tableid: number;
+        totalamount: number;
+        totaltax: number;
+        updaterid?: number | null;
+        updatetime?: any | null;
+        voidreasonid?: number | null;
+        shift: { __typename?: "shift"; name: string };
+        account: { __typename?: "account"; fullname: string };
+        table: {
+            __typename?: "table";
+            name: string;
+            location: { __typename?: "location"; name: string };
+        };
+    } | null;
 };
 
-export type UpdateLocationMutationVariables = Exact<{
+export type GetCheckDetailQueryVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+}>;
+
+export type GetCheckDetailQuery = {
+    __typename?: "query_root";
+    checkdetail_by_pk?: {
+        __typename?: "checkdetail";
+        amount: number;
+        checkid: number;
+        completiontime?: any | null;
+        id: number;
+        isreminded: boolean;
+        itemid: number;
+        itemprice: number;
+        note?: string | null;
+        quantity: any;
+        starttime: any;
+        status: any;
+        subtotal: number;
+        taxamount: number;
+        voidreason?: { __typename?: "voidreason"; name: string } | null;
+        item: { __typename?: "item"; name: string };
+    } | null;
+};
+
+export type CreateItemMutationVariables = Exact<{
+    object?: InputMaybe<Item_Insert_Input>;
+}>;
+
+export type CreateItemMutation = {
+    __typename?: "mutation_root";
+    insert_item_one?: { __typename?: "item"; id: number } | null;
+};
+
+export type DeleteItemMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type UpdateLocationMutation = {
+export type DeleteItemMutation = {
     __typename?: "mutation_root";
-    update_location_by_pk?: {
-        __typename?: "location";
-        id: number;
-        name: string;
-        status?: any | null;
-    } | null;
+    update_item_by_pk?: { __typename?: "item"; id: number; name: string; status: any } | null;
+};
+
+export type UpdateItemMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    _set?: InputMaybe<Item_Set_Input>;
+}>;
+
+export type UpdateItemMutation = {
+    __typename?: "mutation_root";
+    update_item_by_pk?: { __typename?: "item"; id: number } | null;
 };
 
 export type LoginQueryQueryVariables = Exact<{
@@ -10345,117 +10355,172 @@ export type LoginQueryQuery = {
     }>;
 };
 
-export type CreatePaymentmethodMutationVariables = Exact<{
+export type CreateMajorGroupMutationVariables = Exact<{
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type CreatePaymentmethodMutation = {
+export type CreateMajorGroupMutation = {
     __typename?: "mutation_root";
-    insert_paymentmethod_one?: {
-        __typename?: "paymentmethod";
+    insert_majorgroup_one?: {
+        __typename?: "majorgroup";
         id: number;
         name: string;
         status: any;
     } | null;
 };
 
-export type DeletePaymentmethodMutationVariables = Exact<{
+export type DeleteMajorGroupMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type DeletePaymentmethodMutation = {
+export type DeleteMajorGroupMutation = {
     __typename?: "mutation_root";
-    update_paymentmethod_by_pk?: {
-        __typename?: "paymentmethod";
+    update_majorgroup_by_pk?: {
+        __typename?: "majorgroup";
         id: number;
         name: string;
         status: any;
     } | null;
 };
 
-export type UpdatePaymentmethodMutationVariables = Exact<{
+export type GetMajorGroupQueryVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+}>;
+
+export type GetMajorGroupQuery = {
+    __typename?: "query_root";
+    majorgroup_by_pk?: { __typename?: "majorgroup"; status: any } | null;
+};
+
+export type UpdateMajorGroupMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type UpdatePaymentmethodMutation = {
+export type UpdateMajorGroupMutation = {
     __typename?: "mutation_root";
-    update_paymentmethod_by_pk?: {
-        __typename?: "paymentmethod";
+    update_majorgroup_by_pk?: {
+        __typename?: "majorgroup";
         id: number;
         name: string;
         status: any;
     } | null;
 };
 
-export type GetRoleQueryQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetRoleQueryQuery = {
-    __typename?: "query_root";
-    role: Array<{
-        __typename?: "role";
-        name: string;
-        id: number;
-        accounts_aggregate: {
-            __typename?: "account_aggregate";
-            aggregate?: { __typename?: "account_aggregate_fields"; count: number } | null;
-        };
-    }>;
-};
-
-export type CheckWsQueryVariables = Exact<{
-    _gte?: InputMaybe<Scalars["date"]>;
-    _lte?: InputMaybe<Scalars["date"]>;
+export type CreateMealTypeMutationVariables = Exact<{
+    name?: InputMaybe<Scalars["String"]>;
+    status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type CheckWsQuery = {
-    __typename?: "query_root";
-    worksession: Array<{ __typename?: "worksession"; id: number }>;
-};
-
-export type InsertShiftMutationVariables = Exact<{
-    objects?: InputMaybe<Array<Shift_Insert_Input> | Shift_Insert_Input>;
-}>;
-
-export type InsertShiftMutation = {
+export type CreateMealTypeMutation = {
     __typename?: "mutation_root";
-    insert_shift?: {
-        __typename?: "shift_mutation_response";
-        returning: Array<{ __typename?: "shift"; id: number }>;
-    } | null;
+    insert_mealtype_one?: { __typename?: "mealtype"; id: number; name: string; status: any } | null;
 };
 
-export type DeleteShiftMutationVariables = Exact<{
+export type DeleteMealtypeMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
 }>;
 
-export type DeleteShiftMutation = {
+export type DeleteMealtypeMutation = {
     __typename?: "mutation_root";
-    update_shift_by_pk?: { __typename?: "shift"; id: number; name: string; status: any } | null;
+    update_mealtype_by_pk?: {
+        __typename?: "mealtype";
+        id: number;
+        name: string;
+        status: any;
+    } | null;
 };
 
-export type ShiftQueryQueryVariables = Exact<{ [key: string]: never }>;
+export type GetMealTypeQueryVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+}>;
 
-export type ShiftQueryQuery = {
+export type GetMealTypeQuery = {
     __typename?: "query_root";
-    shift: Array<{
-        __typename?: "shift";
-        closerid?: number | null;
-        endtime: any;
+    mealtype_by_pk?: { __typename?: "mealtype"; status: any } | null;
+};
+
+export type UpdateMealTypeMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    name?: InputMaybe<Scalars["String"]>;
+    status?: InputMaybe<Scalars["basic_status"]>;
+}>;
+
+export type UpdateMealTypeMutation = {
+    __typename?: "mutation_root";
+    update_mealtype_by_pk?: {
+        __typename?: "mealtype";
         id: number;
-        isopen: boolean;
         name: string;
-        openerid?: number | null;
-        starttime: any;
         status: any;
-        worksession: { __typename?: "worksession"; id: number; isopen: boolean; workdate: any };
-    }>;
+    } | null;
+};
+
+export type CreateMenuMutationVariables = Exact<{
+    object?: InputMaybe<Menu_Insert_Input>;
+}>;
+
+export type CreateMenuMutation = {
+    __typename?: "mutation_root";
+    insert_menu_one?: { __typename?: "menu"; id: number } | null;
+};
+
+export type DeleteMenuMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    name?: InputMaybe<Scalars["String"]>;
+    status?: InputMaybe<Scalars["basic_status"]>;
+}>;
+
+export type DeleteMenuMutation = {
+    __typename?: "mutation_root";
+    update_menu_by_pk?: { __typename?: "menu"; id: number; name: string; status: any } | null;
+};
+
+export type UpdateMenuMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    _set?: InputMaybe<Menu_Set_Input>;
+}>;
+
+export type UpdateMenuMutation = {
+    __typename?: "mutation_root";
+    update_menu_by_pk?: { __typename?: "menu"; id: number } | null;
+};
+
+export type CreateMenuItemMutationVariables = Exact<{
+    object?: InputMaybe<Menuitem_Insert_Input>;
+}>;
+
+export type CreateMenuItemMutation = {
+    __typename?: "mutation_root";
+    insert_menuitem_one?: { __typename?: "menuitem"; id: number } | null;
+};
+
+export type DeleteMenuItemMutationVariables = Exact<{
+    _eq?: InputMaybe<Scalars["Int"]>;
+}>;
+
+export type DeleteMenuItemMutation = {
+    __typename?: "mutation_root";
+    delete_menuitem?: {
+        __typename?: "menuitem_mutation_response";
+        returning: Array<{ __typename?: "menuitem"; id: number }>;
+    } | null;
+};
+
+export type UpdateMenuItemMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    _set?: InputMaybe<Menuitem_Set_Input>;
+}>;
+
+export type UpdateMenuItemMutation = {
+    __typename?: "mutation_root";
+    update_menuitem_by_pk?: { __typename?: "menuitem"; id: number } | null;
 };
 
 export type ShiftByWsQueryQueryVariables = Exact<{
@@ -10478,136 +10543,39 @@ export type ShiftByWsQueryQuery = {
     }>;
 };
 
-export type GetShiftByIdQueryVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
+export type CreateSpecialRequestMutationVariables = Exact<{
+    object?: InputMaybe<Specialrequest_Insert_Input>;
 }>;
 
-export type GetShiftByIdQuery = {
-    __typename?: "query_root";
-    shift_by_pk?: {
-        __typename?: "shift";
-        closerid?: number | null;
-        endtime: any;
-        id: number;
-        isopen: boolean;
-        name: string;
-        openerid?: number | null;
-        starttime: any;
-        status: any;
-        worksessionid: number;
-        worksession: {
-            __typename?: "worksession";
-            creationtime: any;
-            creatorid: number;
-            id: number;
-            isopen: boolean;
-            updaterid?: number | null;
-            updatetime?: any | null;
-            workdate: any;
-        };
-    } | null;
+export type CreateSpecialRequestMutation = {
+    __typename?: "mutation_root";
+    insert_specialrequest_one?: { __typename?: "specialrequest"; id: number } | null;
 };
 
-export type UpdateShiftMutationVariables = Exact<{
+export type DeleteSpecialRequestMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     name?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<Scalars["basic_status"]>;
-    closerid?: InputMaybe<Scalars["Int"]>;
-    endtime?: InputMaybe<Scalars["time"]>;
-    isopen?: InputMaybe<Scalars["Boolean"]>;
-    openerid?: InputMaybe<Scalars["Int"]>;
-    starttime?: InputMaybe<Scalars["time"]>;
-    worksessionid?: InputMaybe<Scalars["Int"]>;
 }>;
 
-export type UpdateShiftMutation = {
+export type DeleteSpecialRequestMutation = {
     __typename?: "mutation_root";
-    update_shift_by_pk?: { __typename?: "shift"; id: number; name: string; status: any } | null;
-};
-
-export type CreateSettingMutationMutationVariables = Exact<{
-    address?: InputMaybe<Scalars["String"]>;
-    restaurantimage?: InputMaybe<Scalars["String"]>;
-    restaurantname?: InputMaybe<Scalars["String"]>;
-    taxvalue?: InputMaybe<Scalars["Int"]>;
-}>;
-
-export type CreateSettingMutationMutation = {
-    __typename?: "mutation_root";
-    insert_systemsetting_one?: { __typename?: "systemsetting"; id: number } | null;
-};
-
-export type DeleteSettingMutationMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-}>;
-
-export type DeleteSettingMutationMutation = {
-    __typename?: "mutation_root";
-    delete_systemsetting_by_pk?: { __typename?: "systemsetting"; id: number } | null;
-};
-
-export type GetSystemSettingQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetSystemSettingQuery = {
-    __typename?: "query_root";
-    systemsetting: Array<{
-        __typename?: "systemsetting";
-        address: string;
+    update_specialrequest_by_pk?: {
+        __typename?: "specialrequest";
         id: number;
-        restaurantimage?: string | null;
-        restaurantname: string;
-        taxvalue: number;
-    }>;
-};
-
-export type UpdateSettingMutationMutationVariables = Exact<{
-    address?: InputMaybe<Scalars["String"]>;
-    restaurantimage?: InputMaybe<Scalars["String"]>;
-    restaurantname?: InputMaybe<Scalars["String"]>;
-    taxvalue?: InputMaybe<Scalars["Int"]>;
-    id?: InputMaybe<Scalars["Int"]>;
-}>;
-
-export type UpdateSettingMutationMutation = {
-    __typename?: "mutation_root";
-    update_systemsetting_by_pk?: {
-        __typename?: "systemsetting";
-        id: number;
-        restaurantimage?: string | null;
-        restaurantname: string;
-        taxvalue: number;
-        address: string;
+        name: string;
+        status: any;
     } | null;
 };
 
-export type CreateTableMutationVariables = Exact<{
-    object?: InputMaybe<Table_Insert_Input>;
-}>;
-
-export type CreateTableMutation = {
-    __typename?: "mutation_root";
-    insert_table_one?: { __typename?: "table"; id: number } | null;
-};
-
-export type DeleteTableMutationVariables = Exact<{
+export type UpdateSpecialRequestMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["table_status"]>;
+    _set?: InputMaybe<Specialrequest_Set_Input>;
 }>;
 
-export type DeleteTableMutation = {
+export type UpdateSpecialRequestMutation = {
     __typename?: "mutation_root";
-    update_table_by_pk?: { __typename?: "table"; id: number; name: string; status: any } | null;
-};
-
-export type UpdateTableMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    _set?: InputMaybe<Table_Set_Input>;
-}>;
-
-export type UpdateTableMutation = {
-    __typename?: "mutation_root";
-    update_table_by_pk?: { __typename?: "table"; id: number } | null;
+    update_specialrequest_by_pk?: { __typename?: "specialrequest"; id: number } | null;
 };
 
 export type MyQueryQueryVariables = Exact<{ [key: string]: never }>;
@@ -10615,62 +10583,6 @@ export type MyQueryQueryVariables = Exact<{ [key: string]: never }>;
 export type MyQueryQuery = {
     __typename?: "query_root";
     account: Array<{ __typename?: "account"; avatar?: string | null }>;
-};
-
-export type CreateVoidReasonMutationVariables = Exact<{
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["basic_status"]>;
-}>;
-
-export type CreateVoidReasonMutation = {
-    __typename?: "mutation_root";
-    insert_voidreason_one?: {
-        __typename?: "voidreason";
-        id: number;
-        name: string;
-        status: any;
-    } | null;
-};
-
-export type DeleteVoidReasonMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["basic_status"]>;
-}>;
-
-export type DeleteVoidReasonMutation = {
-    __typename?: "mutation_root";
-    update_voidreason_by_pk?: {
-        __typename?: "voidreason";
-        id: number;
-        name: string;
-        status: any;
-    } | null;
-};
-
-export type UpdateVoidreasonMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    name?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Scalars["basic_status"]>;
-}>;
-
-export type UpdateVoidreasonMutation = {
-    __typename?: "mutation_root";
-    update_voidreason_by_pk?: {
-        __typename?: "voidreason";
-        id: number;
-        name: string;
-        status: any;
-    } | null;
-};
-
-export type DeleteWorksessionMutationMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-}>;
-
-export type DeleteWorksessionMutationMutation = {
-    __typename?: "mutation_root";
-    delete_worksession_by_pk?: { __typename?: "worksession"; id: number } | null;
 };
 
 export type GetAllWorkSessionQueryQueryVariables = Exact<{ [key: string]: never }>;
@@ -10687,61 +10599,4 @@ export type GetAllWorkSessionQueryQuery = {
         updatetime?: any | null;
         workdate: any;
     }>;
-};
-
-export type CheckWsFromToQueryVariables = Exact<{
-    _gte?: InputMaybe<Scalars["date"]>;
-    _lte?: InputMaybe<Scalars["date"]>;
-}>;
-
-export type CheckWsFromToQuery = {
-    __typename?: "query_root";
-    worksession: Array<{ __typename?: "worksession"; id: number }>;
-};
-
-export type GetWorksessionByIdQueryVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-}>;
-
-export type GetWorksessionByIdQuery = {
-    __typename?: "query_root";
-    worksession_by_pk?: {
-        __typename?: "worksession";
-        creationtime: any;
-        creatorid: number;
-        id: number;
-        isopen: boolean;
-        updaterid?: number | null;
-        updatetime?: any | null;
-        workdate: any;
-        shifts: Array<{ __typename?: "shift"; id: number; isopen: boolean }>;
-    } | null;
-};
-
-export type InsertMultiWorkSessionMutationVariables = Exact<{
-    objects?: InputMaybe<Array<Worksession_Insert_Input> | Worksession_Insert_Input>;
-}>;
-
-export type InsertMultiWorkSessionMutation = {
-    __typename?: "mutation_root";
-    insert_worksession?: {
-        __typename?: "worksession_mutation_response";
-        returning: Array<{ __typename?: "worksession"; id: number }>;
-    } | null;
-};
-
-export type UpdateWorkSessionMutationMutationVariables = Exact<{
-    id?: InputMaybe<Scalars["Int"]>;
-    updaterid?: InputMaybe<Scalars["Int"]>;
-    isopen?: InputMaybe<Scalars["Boolean"]>;
-    updatetime?: InputMaybe<Scalars["timestamp"]>;
-}>;
-
-export type UpdateWorkSessionMutationMutation = {
-    __typename?: "mutation_root";
-    update_worksession_by_pk?: { __typename?: "worksession"; id: number } | null;
-    delete_itemoutofstock?: {
-        __typename?: "itemoutofstock_mutation_response";
-        returning: Array<{ __typename?: "itemoutofstock"; id: number }>;
-    } | null;
 };

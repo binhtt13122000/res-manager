@@ -13,7 +13,7 @@ import { MobileDatePicker, TimePicker } from "@mui/x-date-pickers";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import useSnackbar from "components/Snackbar/useSnackbar";
-import { popperSx } from "containers/shift/ShiftCloneForm";
+import { popperSx } from "pages/_app";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

@@ -3,6 +3,24 @@ export enum BASIC_ENUM {
     INACTIVE = "INACTIVE",
 }
 
+export enum CHECK_ENUM {
+    ACTIVE = "ACTIVE",
+    CLOSED = "CLOSED",
+    VOID = "VOID",
+}
+
+export enum BILL_ENUM {
+    CLOSED = "CLOSED",
+    REFUND = "REFUND",
+}
+
+export enum CHECK_DETAIL_ENUM {
+    WAITING = "WAITING",
+    READY = "READY",
+    SERVED = "SERVED",
+    RECALL = "RECALL",
+    VOID = "VOID",
+}
 export enum USER_ENUM {
     ONLINE = "ONLINE",
     OFFLINE = "OFFLINE",
