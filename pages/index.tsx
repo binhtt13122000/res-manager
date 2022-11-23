@@ -423,7 +423,7 @@ const Home: NextPage = () => {
                                 lineHeight="24px"
                                 color="#5a5c69"
                             >
-                                {"168,001"}
+                                {"12 phút"}
                             </Typography>
                         </Box>
                         <CalendarTodayIcon
