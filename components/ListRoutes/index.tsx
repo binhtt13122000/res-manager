@@ -269,14 +269,16 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
                     opened={open}
                     isView={false}
                     data={{
-                        email: userCurrent?.account[0].email || "",
-                        fullname: userCurrent?.account[0].fullname || "",
-                        phone: userCurrent?.account[0].phone || "",
-                        username: userCurrent?.account[0].username || "",
-                        roleid: userCurrent?.account[0].roleid || 0,
-                        avatar: userCurrent?.account[0].avatar || "",
-                        id: userCurrent?.account[0].id || 0,
-                        status: userCurrent?.account[0].status || USER_ENUM.INACTIVE,
+                        email: (userCurrent?.account && userCurrent?.account[0].email) || "",
+                        fullname: (userCurrent?.account && userCurrent?.account[0].fullname) || "",
+                        phone: (userCurrent?.account && userCurrent?.account[0].phone) || "",
+                        username: (userCurrent?.account && userCurrent?.account[0].username) || "",
+                        roleid: (userCurrent?.account && userCurrent?.account[0].roleid) || 0,
+                        avatar: (userCurrent?.account && userCurrent?.account[0].avatar) || "",
+                        id: (userCurrent?.account && userCurrent?.account[0].id) || 0,
+                        status:
+                            (userCurrent?.account && userCurrent?.account[0].status) ||
+                            USER_ENUM.INACTIVE,
                     }}
                     handleClose={handleClose}
                 />

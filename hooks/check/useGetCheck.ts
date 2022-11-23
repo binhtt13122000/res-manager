@@ -20,7 +20,6 @@ const useGetCheck = (id: number) => {
                             guestname
                             id
                             note
-                            runningsince
                             shiftid
                             status
                             subtotal

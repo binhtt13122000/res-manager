@@ -118,7 +118,7 @@ const Check: NextPage = () => {
                 return (
                     <ChipBase
                         color={"error"}
-                        label={"void"}
+                        label={"Hủy"}
                         size="small"
                         sx={{
                             fontSize: 14,

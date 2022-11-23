@@ -53,7 +53,7 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({ appbarHeight, handleDra
                     display="flex"
                     gap={1}
                     alignItems="center"
-                    onClick={() => router.push(ROUTES.ACCOUNT)}
+                    onClick={() => router.push(ROUTES.DEFAULT)}
                 >
                     <Image src="/images/cutlery.png" alt="logo" width={40} height={40} />
                     <Typography variant="h5">Quản lý nhà hàng</Typography>
@@ -78,7 +78,9 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({ appbarHeight, handleDra
                             display: { xs: "none", sm: "inline-block" },
                         }}
                     >
-                        {` ${user?.account[0].role.name} | ${user?.account[0].fullname}`}
+                        {user?.account &&
+                            user?.account[0] &&
+                            ` ${user?.account[0].role.name} | ${user?.account[0].fullname}`}
                     </Typography>
                     {/* <Tooltip title="Thông báo">
                         <IconButton

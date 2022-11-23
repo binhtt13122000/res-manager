@@ -6,6 +6,7 @@ import { IForm } from "utils/common";
 import CardContainer from "components/Card/Container";
 import { GetCheckDetailQuery } from "generated/graphql";
 import TextfieldBase from "components/BaseTextField";
+// import CRUDTable from "components/Table";
 
 const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>> = (
     props: IForm<GetCheckDetailQuery["checkdetail_by_pk"]>
@@ -199,6 +200,40 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                             fullWidth
                             value={data?.note}
                         />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        gap={3}
+                        display="flex"
+                        sx={{
+                            flexWrap: { xs: "wrap", md: "nowrap" },
+                        }}
+                    >
+                        {/* <CRUDTable
+                            entity="checkdetailspecialrequest"
+                            queryKey="checkdetailspecialrequestqr"
+                            title="Yêu cầu đặc biệt"
+                            firstOrderField="id"
+                            columns={[
+                                {
+                                    field: "id",
+                                    title: "STT",
+                                    index: 1,
+                                    type: "index",
+                                    disableSort: true,
+                                    disableFilter: true,
+                                },
+                                {
+                                    field: "specialrequest",
+                                    title: "Yêu cầu đặc biệt",
+                                    index: 2,
+                                    type: "object",
+                                    subField: "name",
+                                    subFieldType: "string",
+                                },
+                            ]}
+                        /> */}
                     </Grid>
                     <Box
                         sx={{

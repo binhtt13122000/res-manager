@@ -1,4 +1,4 @@
-import { Box, Card, Container, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import TextfieldBase from "components/BaseTextField";
 import CellTableTypography from "components/CellTableTypography";
 import ChipBase from "components/Chip";
@@ -21,6 +21,7 @@ const CheckDetail: NextPage = () => {
     const { mutate } = useGetCheckDetail();
     const [databyId, setData] = useState<GetCheckDetailQuery["checkdetail_by_pk"]>(null);
     const [open, setOpen] = useState(false);
+    const [itemid, setItemId] = useState<number>(0);
     const columns: IColumn[] = [
         {
             field: "id",
@@ -29,6 +30,7 @@ const CheckDetail: NextPage = () => {
             type: "index",
             disableSort: true,
             disableFilter: true,
+            width: "80px",
         },
         {
             field: "item",
@@ -97,7 +99,7 @@ const CheckDetail: NextPage = () => {
                 },
                 {
                     key: CHECK_DETAIL_ENUM.VOID,
-                    value: "void",
+                    value: "Hủy",
                 },
                 {
                     key: CHECK_DETAIL_ENUM.WAITING,
@@ -160,13 +162,36 @@ const CheckDetail: NextPage = () => {
                 return (
                     <ChipBase
                         color={"error"}
-                        label={"void"}
+                        label={"Hủy"}
                         size="small"
                         sx={{
                             fontSize: 14,
                             minWidth: "150px",
                         }}
                     />
+                );
+            },
+        },
+        {
+            index: 7,
+            disableFilter: true,
+            disableSort: true,
+            title: "Xem yêu cầu đặc biệt",
+            field: "id",
+            type: "number",
+            render: (data: number) => {
+                return (
+                    <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => {
+                                setItemId(data);
+                            }}
+                        >
+                            Xem
+                        </Button>
+                    </Box>
                 );
             },
         },
@@ -191,7 +216,7 @@ const CheckDetail: NextPage = () => {
         );
     }
     return (
-        <Container maxWidth="lg">
+        <Box sx={{ width: "100%" }}>
             <CheckDetailForm data={databyId} opened={open} handleClose={() => setOpen(false)} />
             <Card
                 style={{
@@ -227,7 +252,7 @@ const CheckDetail: NextPage = () => {
                             variant="h5"
                             sx={{ fontWeight: "bold" }}
                         >
-                            {"Đơn hàng mã " + data?.check_by_pk?.checkno}
+                            {"Đơn hàng #" + data?.check_by_pk?.checkno}
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -337,7 +362,7 @@ const CheckDetail: NextPage = () => {
                             />
                             <TextfieldBase
                                 id="cover"
-                                label={"Cover"}
+                                label={"Số khách"}
                                 variant="outlined"
                                 InputProps={{
                                     readOnly: true,
@@ -454,7 +479,7 @@ const CheckDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={data?.check_by_pk?.totaltax}
+                                value={data?.check_by_pk?.note}
                             />
                         </Grid>
                     </Grid>
@@ -465,6 +490,8 @@ const CheckDetail: NextPage = () => {
                                 columns={columns}
                                 title={"Món ăn trong đơn hàng"}
                                 entity="checkdetail"
+                                defaultFilter={`{checkid: {_eq: ${id}}}`}
+                                defaultFilterForCount={`{checkid: {_eq: ${id}}}`}
                                 firstOrderField="id"
                                 sort
                                 enableFilter
@@ -487,9 +514,45 @@ const CheckDetail: NextPage = () => {
                             />
                         </Grid>
                     </Grid>
+                    {itemid ? (
+                        <Grid item xs={12}>
+                            <Grid item xs={12}>
+                                <CRUDTable
+                                    queryKey="SpcQuery"
+                                    columns={[
+                                        {
+                                            field: "id",
+                                            title: "STT",
+                                            index: 1,
+                                            type: "index",
+                                            disableSort: true,
+                                            disableFilter: true,
+                                            width: "80px",
+                                        },
+                                        {
+                                            field: "specialrequest",
+                                            title: "Yêu cầu",
+                                            index: 2,
+                                            type: "object",
+                                            subField: "name",
+                                            subFieldType: "string",
+                                        },
+                                    ]}
+                                    title={"Yêu cầu đặc biệt cho món ăn"}
+                                    entity="checkdetailspecialrequest"
+                                    defaultFilter={`{checkdetailid: {_eq: ${itemid}}}`}
+                                    defaultFilterForCount={`{checkdetailid: {_eq: ${itemid}}}`}
+                                    firstOrderField="id"
+                                    sort
+                                    enableFilter
+                                    maxWidth="100%"
+                                />
+                            </Grid>
+                        </Grid>
+                    ) : null}
                 </Grid>
             </Card>
-        </Container>
+        </Box>
     );
 };
 

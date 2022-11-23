@@ -62,4 +62,10 @@ export const routes = [
         icon: "/images/employees.png",
         path: ROUTES.MEAL_TYPE,
     },
+    {
+        id: 6,
+        name: "Nhật ký thu ngân",
+        icon: "/images/employees.png",
+        path: ROUTES.CASHIER_LOG,
+    },
 ];

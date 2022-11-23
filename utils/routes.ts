@@ -19,5 +19,5 @@ export enum ROUTES {
     CHECK = "/check",
     BILL = "/bill",
     DASHBOARD = "/dashboard",
-    CASHIER_LOG = "cashier-log",
+    CASHIER_LOG = "/cashier-log",
 }

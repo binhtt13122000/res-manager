@@ -1,242 +1,492 @@
 import { NextPage } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import router from "next/router";
+import { Box, Button, ButtonGroup, Typography } from "@mui/material";
+import { CalendarToday as CalendarTodayIcon } from "@mui/icons-material";
+import useGetBillByTime from "hooks/dashboard/useGetBillByTime";
+import useGetBillByTimeWithRefund from "hooks/dashboard/useGetBillByTimeWithRefund";
+import useGetBillByTimeWithClose from "hooks/dashboard/useGetBillByTimeWithClose";
+import { LineChartYear } from "containers/chart/LineChartYear";
+import DonutChart from "containers/chart/DonutChart";
+import useGetBillMoneyByTimeWithRefund from "hooks/dashboard/useGetBillMoneyByTimeWithRefund";
+import useGetCoverByTime from "hooks/dashboard/useGetCoverByTime";
+import { LineChartMonth } from "containers/chart/LineChartMonth";
+import { LineChartDay } from "containers/chart/LineChartDay";
+import BarChartWithProduct from "containers/chart/BarChartWithProduct";
+import BarChartWithAmount from "containers/chart/BarChartWithAmount";
 
 const Home: NextPage = () => {
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const day = new Date().getDate();
+    const { data: totalBill } = useGetBillByTime(`${year}/${month}/01`, `${year}/${month}/${day}`);
+    const { data: totalBillWithClose } = useGetBillByTimeWithClose(
+        `${year}/${month}/01`,
+        `${year}/${month}/${day}`
+    );
+    const { data: totalBillWithRefund } = useGetBillByTimeWithRefund(
+        `${year}/${month}/01`,
+        `${year}/${month}/${day}`
+    );
+    const { data: totalBillMoneyWithRefund } = useGetBillMoneyByTimeWithRefund(
+        `${year}/${month}/01`,
+        `${year}/${month}/${day}`
+    );
+    const { data: dataCover } = useGetCoverByTime(`${year}/${month}/01`, `${year}/${month}/${day}`);
+    const [type, setType] = useState<"MONTH" | "DAY" | "YEAR">("DAY");
     useEffect(() => {
         const userJson = localStorage.getItem("user");
         if (!userJson) {
             router.push("/login");
         }
     }, []);
-    // const initData: AccountDTO = {
-    //     email: "",
-    //     phone: "",
-    //     username: "",
-    //     fullName: "",
-    //     avatar: "",
-    //     roleId: 0,
-    //     restaurantId: 0,
-    // };
-    // const [data, setData] = useState<AccountDTO>(initData);
-    // const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
-    // const addRowData = async () => {
-    //     setIsOpenForm(true);
-    //     setData(initData);
-    // };
-    // const [isViewAction, setViewAction] = useState<boolean>(false);
-
-    // const columns: IColumn[] = [
-    //     {
-    //         field: "id",
-    //         title: "STT",
-    //         index: 1,
-    //         type: "index",
-    //         disableSort: true,
-    //         disableFilter: true,
-    //         width: "80px",
-    //     },
-    //     {
-    //         field: "username",
-    //         title: "Username",
-    //         index: 2,
-    //         type: "string",
-    //         width: "120px",
-    //     },
-    //     {
-    //         field: "status",
-    //         title: "Status",
-    //         index: 3,
-    //         type: "enum",
-    //         width: "120px",
-    //         enumValue: [
-    //             {
-    //                 key: "ONLINE",
-    //                 value: "ONLINE",
-    //             },
-    //             {
-    //                 key: "OFFLINE",
-    //                 value: "OFFLINE",
-    //             },
-    //             {
-    //                 key: "INACTIVE",
-    //                 value: "INACTIVE",
-    //             },
-    //         ],
-    //         render: (status: string) => {
-    //             if (status === "ONLINE") {
-    //                 return (
-    //                     <ChipBase
-    //                         color={"success"}
-    //                         label={"ONLINE"}
-    //                         size="small"
-    //                         sx={{
-    //                             fontSize: 12,
-    //                         }}
-    //                     />
-    //                 );
-    //             }
-    //             if (status === "OFFLINE") {
-    //                 return (
-    //                     <ChipBase
-    //                         color={"error"}
-    //                         label={"OFFLINE"}
-    //                         size="small"
-    //                         sx={{
-    //                             fontSize: 12,
-    //                         }}
-    //                     />
-    //                 );
-    //             }
-    //             if (status === "INACTIVE") {
-    //                 return (
-    //                     <ChipBase
-    //                         color={"warning"}
-    //                         label={"INACTIVE"}
-    //                         size="small"
-    //                         sx={{
-    //                             fontSize: 12,
-    //                         }}
-    //                     />
-    //                 );
-    //             }
-    //             return (
-    //                 <ChipBase
-    //                     color={"warning"}
-    //                     label={"INACTIVE"}
-    //                     size="small"
-    //                     sx={{
-    //                         fontSize: 12,
-    //                     }}
-    //                 />
-    //             );
-    //         },
-    //     },
-    //     {
-    //         field: "fullName",
-    //         title: "Full Name",
-    //         index: 4,
-    //         type: "string",
-    //         width: "160px",
-    //     },
-    //     {
-    //         field: "email",
-    //         title: "Email",
-    //         index: 5,
-    //         type: "string",
-    //         width: "160px",
-    //     },
-    //     {
-    //         field: "phone",
-    //         title: "Phone Number",
-    //         index: 6,
-    //         type: "string",
-    //         width: "160px",
-    //     },
-    //     {
-    //         index: 7,
-    //         field: "restaurant",
-    //         title: "Restaurant",
-    //         type: "object",
-    //         subField: "name",
-    //         subFieldType: "string",
-    //         disableSort: true,
-    //     },
-    //     {
-    //         index: 7,
-    //         field: "role",
-    //         title: "Role",
-    //         type: "object",
-    //         subField: "name",
-    //         subFieldType: "string",
-    //         width: "100px",
-    //         disableSort: true,
-    //     },
-    //     {
-    //         index: 8,
-    //         field: "roleId",
-    //         type: "number",
-    //         title: "roleId",
-    //         disable: true,
-    //     },
-    //     {
-    //         index: 9,
-    //         field: "restaurantId",
-    //         type: "number",
-    //         title: "restaurantId",
-    //         disable: true,
-    //     },
-    //     {
-    //         index: 10,
-    //         field: "avatar",
-    //         type: "string",
-    //         title: "avatar",
-    //         disable: true,
-    //     },
-    // ];
-
-    // const handleClose = useCallback(
-    //     (type: "SAVE" | "CANCEL", data?: AccountDTO, clearErrors?: Function) => {
-    //         if (type === "SAVE") {
-    //             if (data) {
-    //                 // createBranch(data);
-    //             }
-    //         } else {
-    //             resetData();
-    //         }
-    //         if (clearErrors) {
-    //             clearErrors();
-    //         }
-    //         setViewAction(false);
-    //     },
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    //     []
-    // );
-
-    // const viewRowData = (rowData: AccountDTO) => {
-    //     const breed: AccountDTO = {
-    //         username: rowData.username,
-    //         email: rowData.email,
-    //         phone: rowData.phone,
-    //         id: rowData.id,
-    //         fullName: rowData.fullName,
-    //         roleId: rowData.roleId,
-    //         restaurantId: rowData.restaurantId,
-    //         avatar: rowData.avatar,
-    //     };
-    //     setIsOpenForm(true);
-    //     setData(breed);
-    //     setViewAction(true);
-    // };
-
-    // const resetData = () => {
-    //     setData(initData);
-    //     setIsOpenForm(false);
-    // };
-
     return (
-        <>
-            {/* <AccountForm
-                opened={isOpenForm}
-                isView={isViewAction}
-                data={data}
-                handleClose={handleClose}
-            />
-            <CRUDTable
-                queryKey="AccountQuery"
-                columns={columns}
-                title={"Account Management"}
-                entity="account"
-                firstOrderField="id"
-                sort
-                enableFilter
-                action={{
-                    onView: (rowData: AccountDTO) => viewRowData(rowData),
-                    onAdd: () => addRowData(),
-                    onChangeStatus: (rowData: AccountDTO) => {},
+        <Box p={1}>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                alignItems="stretch"
+                marginY={2}
+                marginX={4}
+            >
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Doanh thu"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(
+                                    totalBill?.bill_aggregate?.aggregate?.sum?.totalamount || 0
+                                )}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Tổng tiền hoàn trả"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(
+                                    totalBillMoneyWithRefund?.bill_aggregate?.aggregate?.sum
+                                        ?.totalamount || 0
+                                )}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Tổng hóa đơn đóng"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {totalBillWithClose?.bill_aggregate?.aggregate?.count || 0}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+            </Box>
+            <Box
+                display="flex"
+                justifyContent="space-between"
+                flexWrap="wrap"
+                alignItems="stretch"
+                marginY={2}
+                marginX={4}
+            >
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Tổng hóa đơn trả"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {totalBillWithRefund?.bill_aggregate?.aggregate?.count || 0}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Tổng số khách mới"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {dataCover?.check_aggregate?.aggregate?.sum?.cover || 0}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        flexShrink: 0,
+                        flexGrow: 1,
+                        flexBasis: { lg: "25%", md: "50%", xs: "100%" },
+                        paddingRight: { md: 5, xs: 0 },
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {}}
+                >
+                    <Box
+                        sx={{
+                            backgroundColor: "#fff",
+                            padding: "20px",
+                            borderLeft: ".25rem solid #4e73df",
+                            borderRadius: 1,
+                            display: "flex",
+                            alignItems: "center",
+                            boxShadow: 6,
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                flexGrow: 1,
+                                rowGap: 1,
+                            }}
+                        >
+                            <Typography
+                                component="h2"
+                                fontSize="18px"
+                                fontWeight="700"
+                                lineHeight="14px"
+                                textTransform="uppercase"
+                                color="#4e73df"
+                                noWrap
+                                pb={2}
+                            >
+                                {"Thời gian trung bình"}
+                            </Typography>
+                            <Typography
+                                component="h5"
+                                fontSize="28px"
+                                fontWeight="600"
+                                lineHeight="24px"
+                                color="#5a5c69"
+                            >
+                                {"168,001"}
+                            </Typography>
+                        </Box>
+                        <CalendarTodayIcon
+                            fontSize="large"
+                            style={{
+                                fontWeight: "900",
+                                lineHeight: "32px",
+                                color: "#dddfeb",
+                            }}
+                        />
+                    </Box>
+                </Box>
+            </Box>
+            <Box
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    // flexWrap: "true",
+                    flexDirection: "column",
                 }}
-            /> */}
-        </>
+            >
+                <Box sx={{ width: "90%" }}>
+                    <ButtonGroup
+                        sx={{ float: "right" }}
+                        variant="contained"
+                        aria-label="outlined primary button group"
+                    >
+                        <Button onClick={() => setType("DAY")}>Ngày</Button>
+                        <Button onClick={() => setType("MONTH")}>Tháng</Button>
+                        <Button onClick={() => setType("YEAR")}>Năm</Button>
+                    </ButtonGroup>
+                    {type === "YEAR" ? (
+                        <LineChartYear />
+                    ) : type === "MONTH" ? (
+                        <LineChartMonth />
+                    ) : type === "DAY" ? (
+                        <LineChartDay />
+                    ) : null}
+                </Box>
+                <Box sx={{ height: 5 }}></Box>
+                <Box sx={{ width: "90%", minHeight: 500 }}>
+                    <DonutChart />
+                </Box>
+                <Box sx={{ height: 5 }}></Box>
+                <Box sx={{ width: "90%", minHeight: 500 }}>
+                    <BarChartWithProduct />
+                </Box>
+                <Box sx={{ height: 5 }}></Box>
+                <Box sx={{ width: "90%", minHeight: 500 }}>
+                    <BarChartWithAmount />
+                </Box>
+                {/* <Grid item md={5} xs={12}>
+                </Grid>
+                <Grid item md={5} xs={12}>
+                    <BarChart />
+                </Grid>
+                <Grid item md={5} xs={12}>
+                    <BarChart />
+                </Grid> */}
+            </Box>
+        </Box>
     );
 };
 
