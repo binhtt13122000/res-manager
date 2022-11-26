@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import useGetBill from "hooks/bill/useGetBill";
 import BillDetailForm from "containers/bill-detail/BillDetailForm";
 import useGetBillDetail from "hooks/bill/useGetBillDetail";
+import { BILL_ENUM } from "utils/enums";
 
 const BillDetail: NextPage = () => {
     const router = useRouter();
@@ -229,7 +230,7 @@ const BillDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={`${data?.bill_by_pk?.totaltax / 100}%`}
+                                value={`${data?.bill_by_pk?.totaltax}`}
                             />
                             <TextfieldBase
                                 id="totalamount"
@@ -272,7 +273,11 @@ const BillDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={data?.bill_by_pk?.status}
+                                value={
+                                    data?.bill_by_pk?.status === BILL_ENUM.CLOSED
+                                        ? "Đóng"
+                                        : "Hoàn trả"
+                                }
                             />
                             <TextfieldBase
                                 id="creationtime"

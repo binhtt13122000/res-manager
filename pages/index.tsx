@@ -168,8 +168,10 @@ const Home: NextPage = () => {
                                     style: "currency",
                                     currency: "VND",
                                 }).format(
-                                    totalBillMoneyWithRefund?.bill_aggregate?.aggregate?.sum
-                                        ?.totalamount || 0
+                                    Math.abs(
+                                        totalBillMoneyWithRefund?.bill_aggregate?.aggregate?.sum
+                                            ?.totalamount || 0
+                                    )
                                 )}
                             </Typography>
                         </Box>

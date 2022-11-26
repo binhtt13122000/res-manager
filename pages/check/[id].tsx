@@ -1,4 +1,4 @@
-import { Box, Button, Card, Grid, Typography } from "@mui/material";
+import { Box, Button, Card, Grid, Modal, Typography } from "@mui/material";
 import TextfieldBase from "components/BaseTextField";
 import CellTableTypography from "components/CellTableTypography";
 import ChipBase from "components/Chip";
@@ -11,7 +11,7 @@ import useGetCheckDetail from "hooks/check/useGetCheckDetail";
 import { NextPage } from "next";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { CHECK_DETAIL_ENUM } from "utils/enums";
+import { CHECK_DETAIL_ENUM, CHECK_ENUM } from "utils/enums";
 import CheckDetailForm from "containers/check-detail/CheckDetailForm";
 
 const CheckDetail: NextPage = () => {
@@ -411,7 +411,7 @@ const CheckDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={`${data?.check_by_pk?.totaltax / 100}%`}
+                                value={`${data?.check_by_pk?.totaltax}`}
                             />
                             <TextfieldBase
                                 id="totalamount"
@@ -434,7 +434,13 @@ const CheckDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={data?.check_by_pk?.status}
+                                value={
+                                    data?.check_by_pk?.status === CHECK_ENUM.ACTIVE
+                                        ? "Sẵn sàng"
+                                        : data?.check_by_pk?.status === CHECK_ENUM.CLOSED
+                                        ? "Đã đóng"
+                                        : "Hủy"
+                                }
                             />
                             <TextfieldBase
                                 id="creationtime"
@@ -514,42 +520,67 @@ const CheckDetail: NextPage = () => {
                             />
                         </Grid>
                     </Grid>
-                    {itemid ? (
-                        <Grid item xs={12}>
-                            <Grid item xs={12}>
-                                <CRUDTable
-                                    queryKey="SpcQuery"
-                                    columns={[
-                                        {
-                                            field: "id",
-                                            title: "STT",
-                                            index: 1,
-                                            type: "index",
-                                            disableSort: true,
-                                            disableFilter: true,
-                                            width: "80px",
-                                        },
-                                        {
-                                            field: "specialrequest",
-                                            title: "Yêu cầu",
-                                            index: 2,
-                                            type: "object",
-                                            subField: "name",
-                                            subFieldType: "string",
-                                        },
-                                    ]}
-                                    title={"Yêu cầu đặc biệt cho món ăn"}
-                                    entity="checkdetailspecialrequest"
-                                    defaultFilter={`{checkdetailid: {_eq: ${itemid}}}`}
-                                    defaultFilterForCount={`{checkdetailid: {_eq: ${itemid}}}`}
-                                    firstOrderField="id"
-                                    sort
-                                    enableFilter
-                                    maxWidth="100%"
-                                />
-                            </Grid>
+                    <Modal hideBackdrop open={Boolean(itemid)} onClose={() => setItemId(0)}>
+                        <Grid
+                            sx={{
+                                position: "absolute" as "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
+                                width: 1200,
+                                bgcolor: "background.paper",
+                                border: "2px solid #000",
+                                boxShadow: 24,
+                                pt: 2,
+                                px: 4,
+                                pb: 3,
+                            }}
+                        >
+                            {itemid ? (
+                                <Grid item xs={12}>
+                                    <Grid item xs={12}>
+                                        <CRUDTable
+                                            queryKey="SpcQuery"
+                                            columns={[
+                                                {
+                                                    field: "id",
+                                                    title: "STT",
+                                                    index: 1,
+                                                    type: "index",
+                                                    disableSort: true,
+                                                    disableFilter: true,
+                                                    width: "80px",
+                                                },
+                                                {
+                                                    field: "specialrequest",
+                                                    title: "Yêu cầu",
+                                                    index: 2,
+                                                    type: "object",
+                                                    subField: "name",
+                                                    subFieldType: "string",
+                                                },
+                                            ]}
+                                            title={"Yêu cầu đặc biệt cho món ăn"}
+                                            entity="checkdetailspecialrequest"
+                                            defaultFilter={`{checkdetailid: {_eq: ${itemid}}}`}
+                                            defaultFilterForCount={`{checkdetailid: {_eq: ${itemid}}}`}
+                                            firstOrderField="id"
+                                            sort
+                                            enableFilter
+                                            maxWidth="100%"
+                                        />
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => setItemId(0)}
+                                        >
+                                            Đóng
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            ) : null}
                         </Grid>
-                    ) : null}
+                    </Modal>
                 </Grid>
             </Card>
         </Box>

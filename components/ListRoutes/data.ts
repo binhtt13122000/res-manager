@@ -3,7 +3,7 @@ import { ROUTES } from "utils/routes";
 export const routes = [
     {
         id: 1,
-        name: "Dashboard",
+        name: "Bảng thống kê",
         path: ROUTES.DEFAULT,
         icon: "/images/account.png",
     },
