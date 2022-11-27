@@ -10,6 +10,7 @@ import useCreateMenu from "hooks/menu/useCreateMenu";
 import useUpdateMenu from "hooks/menu/useUpdateMenu";
 import useDeleteMenu from "hooks/menu/useDeleteMenu";
 import MenuForm, { MenuMutationType } from "containers/menu/MenuForm";
+import useGetMenuDf from "hooks/menu/useGetMenu";
 
 const Menu: NextPage = () => {
     useEffect(() => {
@@ -29,6 +30,7 @@ const Menu: NextPage = () => {
     const { mutate: mutateCreate } = useCreateMenu("MenuQuery");
     const { mutate: mutateUpdate } = useUpdateMenu("MenuQuery");
     const { mutate: mutateDelete } = useDeleteMenu("MenuQuery");
+    const { mutate: mutateGet } = useGetMenuDf("MenuQuery");
     const showSnackbar = useSnackbar();
     const [data, setData] = useState<MenuMutationType>(initData);
     const [isOpenForm, setIsOpenForm] = useState<boolean>(false);
@@ -199,58 +201,64 @@ const Menu: NextPage = () => {
         (type: "SAVE" | "CANCEL", data?: MenuMutationType, clearErrors?: Function) => {
             if (type === "SAVE") {
                 if (data) {
-                    if (!data.id) {
-                        data.id = undefined;
-                        mutateCreate(
-                            {
-                                object: {
-                                    mealtypeid: data.mealtypeid,
-                                    name: data.name,
-                                    status: data.status,
-                                    isdefault: data.isdefault,
-                                },
+                    if (data.isdefault) {
+                        mutateGet(undefined, {
+                            onSuccess: () => {
+                                if (!data.id) {
+                                    data.id = undefined;
+                                    mutateCreate(
+                                        {
+                                            object: {
+                                                mealtypeid: data.mealtypeid,
+                                                name: data.name,
+                                                status: data.status,
+                                                isdefault: data.isdefault,
+                                            },
+                                        },
+                                        {
+                                            onSuccess: () => {
+                                                showSnackbar({
+                                                    children: "Thêm mới thành công",
+                                                    severity: "success",
+                                                });
+                                            },
+                                            onError: () => {
+                                                showSnackbar({
+                                                    children: "Thêm mới thất bại",
+                                                    severity: "error",
+                                                });
+                                            },
+                                        }
+                                    );
+                                } else {
+                                    mutateUpdate(
+                                        {
+                                            id: data.id,
+                                            _set: {
+                                                mealtypeid: data.mealtypeid,
+                                                name: data.name,
+                                                status: data.status,
+                                                isdefault: data.isdefault,
+                                            },
+                                        },
+                                        {
+                                            onSuccess: () => {
+                                                showSnackbar({
+                                                    children: "Chỉnh sửa thành công",
+                                                    severity: "success",
+                                                });
+                                            },
+                                            onError: () => {
+                                                showSnackbar({
+                                                    children: "Chỉnh sửa thất bại",
+                                                    severity: "error",
+                                                });
+                                            },
+                                        }
+                                    );
+                                }
                             },
-                            {
-                                onSuccess: () => {
-                                    showSnackbar({
-                                        children: "Thêm mới thành công",
-                                        severity: "success",
-                                    });
-                                },
-                                onError: () => {
-                                    showSnackbar({
-                                        children: "Thêm mới thất bại",
-                                        severity: "error",
-                                    });
-                                },
-                            }
-                        );
-                    } else {
-                        mutateUpdate(
-                            {
-                                id: data.id,
-                                _set: {
-                                    mealtypeid: data.mealtypeid,
-                                    name: data.name,
-                                    status: data.status,
-                                    isdefault: data.isdefault,
-                                },
-                            },
-                            {
-                                onSuccess: () => {
-                                    showSnackbar({
-                                        children: "Chỉnh sửa thành công",
-                                        severity: "success",
-                                    });
-                                },
-                                onError: () => {
-                                    showSnackbar({
-                                        children: "Chỉnh sửa thất bại",
-                                        severity: "error",
-                                    });
-                                },
-                            }
-                        );
+                        });
                     }
                 }
             }

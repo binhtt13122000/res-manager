@@ -11234,6 +11234,16 @@ export type DeleteMenuMutation = {
     update_menu_by_pk?: { __typename?: "menu"; id: number; name: string; status: any } | null;
 };
 
+export type GetMenuDfsMutationVariables = Exact<{ [key: string]: never }>;
+
+export type GetMenuDfsMutation = {
+    __typename?: "mutation_root";
+    update_menu?: {
+        __typename?: "menu_mutation_response";
+        returning: Array<{ __typename?: "menu"; id: number }>;
+    } | null;
+};
+
 export type UpdateMenuMutationVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
     _set?: InputMaybe<Menu_Set_Input>;
