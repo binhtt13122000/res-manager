@@ -13,7 +13,7 @@ import useDeleteItem from "hooks/item/useDeleteItem";
 
 const Item: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }
@@ -50,7 +50,7 @@ const Item: NextPage = () => {
     const deleteRowData = (rowData: ItemMutationType) => {
         if (rowData.status === BASIC_ENUM.INACTIVE) {
             showSnackbar({
-                children: "Yêu cầu đặc biệt này hiện đã ngừng hoạt động!",
+                children: "Món ăn này hiện đã ngừng hoạt động!",
                 severity: "error",
             });
         } else {

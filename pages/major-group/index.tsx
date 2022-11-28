@@ -13,7 +13,7 @@ import MajorGroupForm, { MajorGroupMutationType } from "containers/major-group/M
 
 const Majorgroup: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }
@@ -46,7 +46,7 @@ const Majorgroup: NextPage = () => {
     const deleteRowData = (rowData: MajorGroupMutationType) => {
         if (rowData.status === BASIC_ENUM.INACTIVE) {
             showSnackbar({
-                children: "Loại bữa ăn này hiện đã ngừng hoạt động!",
+                children: "Nhóm món ăn này hiện đã ngừng hoạt động!",
                 severity: "error",
             });
         } else {

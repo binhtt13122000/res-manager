@@ -211,7 +211,7 @@ const BillDetail: NextPage = () => {
                         >
                             <TextfieldBase
                                 id="subtotal"
-                                label={"Sub Total"}
+                                label={"Tổng"}
                                 variant="outlined"
                                 InputProps={{
                                     readOnly: true,
@@ -230,7 +230,10 @@ const BillDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={`${data?.bill_by_pk?.totaltax}`}
+                                value={`${new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(data?.bill_by_pk?.totaltax)}`}
                             />
                             <TextfieldBase
                                 id="totalamount"

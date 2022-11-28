@@ -16,7 +16,7 @@ const AppBarWithDrawer: React.FC<IAppBarWithDrawer> = ({ appbarHeight, handleDra
 
     React.useEffect(() => {
         // Perform localStorage action
-        setUser(JSON.parse(localStorage.getItem("user") || "{}"));
+        setUser(JSON.parse(localStorage.getItem("manager-user") || "{}"));
     }, []);
 
     const theme = useTheme();

@@ -100,7 +100,7 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                     >
                         <TextfieldBase
                             id="subtotal"
-                            label={"Sub Total"}
+                            label={"Tổng"}
                             variant="outlined"
                             InputProps={{
                                 readOnly: true,

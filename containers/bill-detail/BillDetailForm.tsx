@@ -100,7 +100,7 @@ const BillDetailForm: React.FC<IForm<GetBillDetailQuery["billdetail_by_pk"]>> = 
                     >
                         <TextfieldBase
                             id="subtotal"
-                            label={"Sub Total"}
+                            label={"Tổng"}
                             variant="outlined"
                             InputProps={{
                                 readOnly: true,

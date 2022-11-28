@@ -35,7 +35,7 @@ const Home: NextPage = () => {
     const { data: dataCover } = useGetCoverByTime(`${year}/${month}/01`, `${year}/${month}/${day}`);
     const [type, setType] = useState<"MONTH" | "DAY" | "YEAR">("DAY");
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }
@@ -83,7 +83,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap
@@ -149,7 +148,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap
@@ -218,7 +216,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap
@@ -288,7 +285,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap
@@ -349,7 +345,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap
@@ -410,7 +405,6 @@ const Home: NextPage = () => {
                                 component="h2"
                                 fontSize="18px"
                                 fontWeight="700"
-                                lineHeight="14px"
                                 textTransform="uppercase"
                                 color="#4e73df"
                                 noWrap

@@ -15,7 +15,7 @@ import useDeleteSpecialRequest from "hooks/special-request/useDeleteSpecialReque
 
 const SpecialRequest: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }

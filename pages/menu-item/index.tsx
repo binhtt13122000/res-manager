@@ -12,7 +12,7 @@ import useUpdateMenuItem from "hooks/menuitem/useUpdateMenuItem";
 
 const MenuItem: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }

@@ -23,7 +23,7 @@ const BarChartWithAmount = () => {
                 labels: data?.item?.map((x) => x.name),
                 datasets: [
                     {
-                        label: "Số lượng",
+                        label: "Số tiền",
                         indexAxis: "y" as "x" | "y",
                         data: data?.item?.map(
                             (x) => x.checkdetails_aggregate?.aggregate?.sum?.amount || 0

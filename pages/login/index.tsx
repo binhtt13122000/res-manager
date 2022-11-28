@@ -13,15 +13,17 @@ import { NextPageWithLayout } from "utils/common";
 import { USER_ENUM } from "utils/enums";
 import { useEffect } from "react";
 import router from "next/router";
+import useDeleteAccount from "hooks/account/useDeleteAccount";
 
 const Login: NextPageWithLayout = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (userJson) {
             router.push("/");
         }
     }, []);
     const { mutate } = useLogin();
+    const { mutate: deleteAcc } = useDeleteAccount("");
     const {
         handleSubmit,
         register,
@@ -69,7 +71,11 @@ const Login: NextPageWithLayout = () => {
                             setError("password", { message: "Người dùng đã bị khóa!" });
                             return;
                         }
-                        localStorage.setItem("user", JSON.stringify(user));
+                        deleteAcc({
+                            id: user.account[0]?.id,
+                            status: USER_ENUM.ONLINE,
+                        });
+                        localStorage.setItem("manager-user", JSON.stringify(user));
                         Router.push("/");
                     },
                 }

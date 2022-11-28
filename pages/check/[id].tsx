@@ -372,7 +372,7 @@ const CheckDetail: NextPage = () => {
                             />
                             <TextfieldBase
                                 id="subtotal"
-                                label={"Sub Total"}
+                                label={"Tổng"}
                                 variant="outlined"
                                 InputProps={{
                                     readOnly: true,

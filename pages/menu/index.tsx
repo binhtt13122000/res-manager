@@ -14,7 +14,7 @@ import useGetMenuDf from "hooks/menu/useGetMenu";
 
 const Menu: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }

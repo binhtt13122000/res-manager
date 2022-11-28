@@ -10,7 +10,7 @@ import CellTableTypography from "components/CellTableTypography";
 
 const Bill: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }

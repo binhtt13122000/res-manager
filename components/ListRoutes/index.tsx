@@ -31,6 +31,7 @@ import useUpdateAccount from "hooks/account/useUpdateAccount";
 import useLogin from "hooks/login/useLogin";
 import useSnackbar from "components/Snackbar/useSnackbar";
 import useUpdateAccountWithNoPass from "hooks/account/useUpdateAccountWithNoPass";
+import useDeleteAccount from "hooks/account/useDeleteAccount";
 
 export type ChildrenType = {
     fatherIndex: number;
@@ -57,6 +58,7 @@ const initialValue = {
 const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
     const theme = useTheme();
     const router = useRouter();
+    const { mutate: deleteAcc } = useDeleteAccount("");
     const [openUserInfo, setOpenUserInfor] = useState<boolean>(false);
     const { mutate: mutateUpdate } = useUpdateAccount("AccountQuery");
     const { mutate: mutateUpdateNoPass } = useUpdateAccountWithNoPass("AccountQuery");
@@ -67,7 +69,7 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
 
     useEffect(() => {
         // Perform localStorage action
-        setUserCurrent(JSON.parse(localStorage.getItem("user") || "{}"));
+        setUserCurrent(JSON.parse(localStorage.getItem("manager-user") || "{}"));
     }, []);
     const [openChildren, setOpenChildren] = useState<ChildrenType>(initialValue);
     useEffect(() => {
@@ -171,7 +173,7 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
                                             {
                                                 onSuccess(dataLogin) {
                                                     localStorage.setItem(
-                                                        "user",
+                                                        "manager-user",
                                                         JSON.stringify(dataLogin)
                                                     );
                                                     setOpen(false);
@@ -203,7 +205,10 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
                                     },
                                     {
                                         onSuccess(dataLogin) {
-                                            localStorage.setItem("user", JSON.stringify(dataLogin));
+                                            localStorage.setItem(
+                                                "manager-user",
+                                                JSON.stringify(dataLogin)
+                                            );
                                             setOpen(false);
                                             showSnackbar({
                                                 children: "Chỉnh sửa thành công",
@@ -237,6 +242,10 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
     };
 
     const logout = async () => {
+        deleteAcc({
+            id: (userCurrent?.account && userCurrent?.account[0].id) || 0,
+            status: USER_ENUM.ONLINE,
+        });
         localStorage.clear();
         router.push("/login");
     };

@@ -13,7 +13,7 @@ import useDeleteMealType from "hooks/meal-type/useDeleteMealType";
 
 const MealType: NextPage = () => {
     useEffect(() => {
-        const userJson = localStorage.getItem("user");
+        const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
             router.push("/login");
         }
