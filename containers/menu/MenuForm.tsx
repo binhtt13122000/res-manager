@@ -30,6 +30,7 @@ const MenuForm: React.FC<IForm<MenuMutationType>> = (props: IForm<MenuMutationTy
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
         setValue,
         getValues,
@@ -192,7 +193,14 @@ const MenuForm: React.FC<IForm<MenuMutationType>> = (props: IForm<MenuMutationTy
                             {"Trở về"}
                         </Button>
                         {isView || (
-                            <Button variant="contained" type="submit" autoFocus>
+                            <Button
+                                disabled={Boolean(
+                                    defaultData.id && defaultData.isdefault && !watch("isdefault")
+                                )}
+                                variant="contained"
+                                type="submit"
+                                autoFocus
+                            >
                                 {defaultData.id ? "Chỉnh sửa" : "Tạo mới"}
                             </Button>
                         )}

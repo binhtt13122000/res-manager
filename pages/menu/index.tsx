@@ -201,10 +201,26 @@ const Menu: NextPage = () => {
         (type: "SAVE" | "CANCEL", data?: MenuMutationType, clearErrors?: Function) => {
             if (type === "SAVE") {
                 if (data) {
-                    if (data.isdefault) {
-                        mutateGet(undefined, {
-                            onSuccess: () => {
-                                if (!data.id) {
+                    if (!data.id && data.isdefault && data.status === "INACTIVE") {
+                        showSnackbar({
+                            children:
+                                "Không thể tạo mới thực đơn mặc định với trạng thái không hoạt động!",
+                            severity: "error",
+                        });
+                        return;
+                    }
+                    if (data.id && data.isdefault && data.status === "INACTIVE") {
+                        showSnackbar({
+                            children:
+                                "Không thể chỉnh sửa thành thực đơn mặc định với trạng thái không hoạt động!",
+                            severity: "error",
+                        });
+                        return;
+                    }
+                    if (!data.id) {
+                        if (data.isdefault && data.status === "ACTIVE") {
+                            mutateGet(undefined, {
+                                onSuccess: () => {
                                     data.id = undefined;
                                     mutateCreate(
                                         {
@@ -230,7 +246,39 @@ const Menu: NextPage = () => {
                                             },
                                         }
                                     );
-                                } else {
+                                },
+                            });
+                        } else {
+                            data.id = undefined;
+                            mutateCreate(
+                                {
+                                    object: {
+                                        mealtypeid: data.mealtypeid,
+                                        name: data.name,
+                                        status: data.status,
+                                        isdefault: data.isdefault,
+                                    },
+                                },
+                                {
+                                    onSuccess: () => {
+                                        showSnackbar({
+                                            children: "Thêm mới thành công",
+                                            severity: "success",
+                                        });
+                                    },
+                                    onError: () => {
+                                        showSnackbar({
+                                            children: "Thêm mới thất bại",
+                                            severity: "error",
+                                        });
+                                    },
+                                }
+                            );
+                        }
+                    } else {
+                        if (data.isdefault && data.status === "ACTIVE") {
+                            mutateGet(undefined, {
+                                onSuccess: () => {
                                     mutateUpdate(
                                         {
                                             id: data.id,
@@ -256,9 +304,35 @@ const Menu: NextPage = () => {
                                             },
                                         }
                                     );
+                                },
+                            });
+                        } else {
+                            mutateUpdate(
+                                {
+                                    id: data.id,
+                                    _set: {
+                                        mealtypeid: data.mealtypeid,
+                                        name: data.name,
+                                        status: data.status,
+                                        isdefault: data.isdefault,
+                                    },
+                                },
+                                {
+                                    onSuccess: () => {
+                                        showSnackbar({
+                                            children: "Chỉnh sửa thành công",
+                                            severity: "success",
+                                        });
+                                    },
+                                    onError: () => {
+                                        showSnackbar({
+                                            children: "Chỉnh sửa thất bại",
+                                            severity: "error",
+                                        });
+                                    },
                                 }
-                            },
-                        });
+                            );
+                        }
                     }
                 }
             }
