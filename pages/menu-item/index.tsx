@@ -109,6 +109,7 @@ const MenuItem: NextPage = () => {
             title: "Giá món ăn",
             index: 6,
             type: "number",
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <Typography>

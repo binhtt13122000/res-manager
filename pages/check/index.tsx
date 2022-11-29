@@ -30,18 +30,21 @@ const Check: NextPage = () => {
             title: "Thời gian tạo",
             index: 2,
             type: "timestamp",
+            disableFilter: true,
         },
         {
             field: "checkno",
             title: "Mã đơn hàng",
             index: 3,
             type: "number",
+            disableFilter: true,
         },
         {
             field: "totaltax",
             title: "Tổng thuế",
             index: 4,
             type: "number",
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>
@@ -58,6 +61,7 @@ const Check: NextPage = () => {
             title: "Tổng tiền",
             index: 5,
             type: "number",
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>

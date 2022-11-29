@@ -40,7 +40,7 @@ const BillDetail: NextPage = () => {
             title: "Giá món ăn",
             index: 3,
             type: "number",
-            disable: true,
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>
@@ -57,12 +57,14 @@ const BillDetail: NextPage = () => {
             title: "Số lượng",
             index: 4,
             type: "number",
+            disableFilter: true,
         },
         {
             field: "amount",
             title: "Tổng",
             index: 5,
             type: "number",
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>
@@ -387,6 +389,7 @@ const BillDetail: NextPage = () => {
                                     title: "Tổng tiền",
                                     index: 3,
                                     type: "number",
+                                    disableFilter: true,
                                     render: (data: number) => {
                                         return (
                                             <CellTableTypography>

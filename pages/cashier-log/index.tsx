@@ -28,6 +28,7 @@ const CashierLog: NextPage = () => {
             title: "Thời gian tạo",
             index: 2,
             type: "timestamp",
+            disableFilter: true,
         },
         {
             field: "account",
@@ -50,6 +51,7 @@ const CashierLog: NextPage = () => {
             title: "Tổng",
             index: 5,
             type: "number",
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>

@@ -441,23 +441,6 @@ const UpdateProfileForm: React.FC<IForm<AccountDTO>> = (props: IForm<AccountDTO>
                         >
                             {"Trở về"}
                         </Button>
-                        {isView || (
-                            <Button
-                                variant="contained"
-                                type="submit"
-                                disabled={
-                                    email !== "" &&
-                                    emailExist?.account &&
-                                    emailExist?.account.length > 0 &&
-                                    phone !== "" &&
-                                    phoneExist?.account &&
-                                    phoneExist?.account.length > 0
-                                }
-                                autoFocus
-                            >
-                                Chỉnh sửa
-                            </Button>
-                        )}
                     </Box>
                 </Grid>
             </CardContainer>

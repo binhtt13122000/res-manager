@@ -30,19 +30,21 @@ const Bill: NextPage = () => {
             title: "Thời gian tạo",
             index: 2,
             type: "timestamp",
+            disableFilter: true,
         },
         {
             field: "billno",
             title: "Mã đơn hàng",
             index: 3,
             type: "number",
+            disableFilter: true,
         },
         {
             field: "totaltax",
             title: "Tổng thuế",
             index: 4,
             type: "number",
-            disable: true,
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>
@@ -59,7 +61,7 @@ const Bill: NextPage = () => {
             title: "Tổng tiền",
             index: 5,
             type: "number",
-            disable: true,
+            disableFilter: true,
             render: (data: number) => {
                 return (
                     <CellTableTypography>
