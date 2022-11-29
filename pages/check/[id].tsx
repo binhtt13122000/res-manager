@@ -413,7 +413,10 @@ const CheckDetail: NextPage = () => {
                                     readOnly: true,
                                 }}
                                 fullWidth
-                                value={`${data?.check_by_pk?.totaltax}`}
+                                value={`${new Intl.NumberFormat("vi-VN", {
+                                    style: "currency",
+                                    currency: "VND",
+                                }).format(data?.check_by_pk?.totaltax)}`}
                             />
                             <TextfieldBase
                                 id="totalamount"
