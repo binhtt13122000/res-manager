@@ -13,6 +13,7 @@ const publicRuntimeConfig =
 
 const nextConfig = {
     reactStrictMode: true,
+    basePath: "/manager",
     images: {
         domains: ["st3.depositphotos.com", "firebasestorage.googleapis.com"],
     },
