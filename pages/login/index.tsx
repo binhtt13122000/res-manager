@@ -7,19 +7,21 @@ import WarningIcon from "@mui/icons-material/Warning";
 import { LoginModel } from "models/login.model";
 import bcrypt from "bcryptjs";
 import useLogin from "hooks/login/useLogin";
-import Router from "next/router";
 import FullScreenLayout from "components/Layout/FullScreenLayout";
 import { NextPageWithLayout } from "utils/common";
 import { USER_ENUM } from "utils/enums";
 import { useEffect } from "react";
-import router from "next/router";
 import useDeleteAccount from "hooks/account/useDeleteAccount";
 
 const Login: NextPageWithLayout = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
+        const userJson1 = localStorage.getItem("user");
         if (userJson) {
-            router.push("/");
+            window.location.replace("https://binhtruongthanh.tech/manager/");
+        }
+        if (userJson1) {
+            window.location.replace("https://binhtruongthanh.tech/admin/account/");
         }
     }, []);
     const { mutate } = useLogin();
@@ -49,7 +51,7 @@ const Login: NextPageWithLayout = () => {
                         if (user.account.length != 1) {
                             setError("username", { message: "" });
                             setError("password", {
-                                message: "Tên đăng nhập không tồn tại!",
+                                message: "Tên đăng nhập và mật khẩu không chính xác!",
                             });
                             return;
                         }
@@ -61,9 +63,12 @@ const Login: NextPageWithLayout = () => {
                             });
                             return;
                         }
-                        if (user.account[0].role.name.toLocaleUpperCase() !== "MANAGER") {
+                        if (
+                            user.account[0].role.name.toLocaleUpperCase() !== "MANAGER" &&
+                            user.account[0].role.name.toLocaleUpperCase() !== "ADMIN"
+                        ) {
                             setError("username", { message: "" });
-                            setError("password", { message: "Người dùng không phải là MANAGER!" });
+                            setError("password", { message: "Vai trò không phù hợp!" });
                             return;
                         }
                         if (user.account[0].status === USER_ENUM.INACTIVE) {
@@ -71,12 +76,30 @@ const Login: NextPageWithLayout = () => {
                             setError("password", { message: "Người dùng đã bị khóa!" });
                             return;
                         }
-                        deleteAcc({
-                            id: user.account[0]?.id,
-                            status: USER_ENUM.ONLINE,
-                        });
-                        localStorage.setItem("manager-user", JSON.stringify(user));
-                        Router.push("/");
+                        deleteAcc(
+                            {
+                                id: user.account[0]?.id,
+                                status: USER_ENUM.ONLINE,
+                            },
+                            {
+                                onSuccess: () => {
+                                    if (
+                                        user.account[0].role.name.toLocaleUpperCase() === "MANAGER"
+                                    ) {
+                                        localStorage.setItem("manager-user", JSON.stringify(user));
+                                        window.location.replace(
+                                            "https://binhtruongthanh.tech/manager/"
+                                        );
+                                    }
+                                    if (user.account[0].role.name.toLocaleUpperCase() === "ADMIN") {
+                                        localStorage.setItem("user", JSON.stringify(user));
+                                        window.location.replace(
+                                            "https://binhtruongthanh.tech/admin/account/"
+                                        );
+                                    }
+                                },
+                            }
+                        );
                     },
                 }
             );

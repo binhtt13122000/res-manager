@@ -117,7 +117,7 @@ const UpdateProfileForm: React.FC<IForm<AccountDTO>> = (props: IForm<AccountDTO>
             <CardContainer width="90%" maxWidth={820}>
                 <Box sx={{ display: "flex", justifyContent: "center", m: 3 }}>
                     <Typography variant="h6" component="h2">
-                        Chỉnh sửa thông tin cá nhân
+                        Thông tin cá nhân
                     </Typography>
                 </Box>
                 <Grid

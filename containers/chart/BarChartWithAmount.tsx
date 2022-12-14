@@ -10,8 +10,8 @@ const BarChartWithAmount = () => {
     const year = new Date().getFullYear();
     const day = new Date().getDate();
     const { data, isLoading } = useGetItemByAmount(
-        `${year}/${month}/01`,
-        `${year}/${month}/${day}`
+        `${year}/${month}/01 00:00:00`,
+        `${year}/${month}/${day} 23:59:59`
     );
 
     if (isLoading) {
@@ -20,14 +20,28 @@ const BarChartWithAmount = () => {
     return (
         <Bar
             data={{
-                labels: data?.item?.map((x) => x.name),
+                labels: data?.item
+                    ?.filter((x) => x.checkdetails_aggregate?.aggregate?.sum?.amount)
+                    .sort(
+                        (a, b) =>
+                            b.checkdetails_aggregate.aggregate?.sum?.amount -
+                            a.checkdetails_aggregate.aggregate?.sum?.amount
+                    )
+                    .slice(0, 5)
+                    .map((x) => x.name),
                 datasets: [
                     {
                         label: "Số tiền",
                         indexAxis: "y" as "x" | "y",
-                        data: data?.item?.map(
-                            (x) => x.checkdetails_aggregate?.aggregate?.sum?.amount || 0
-                        ),
+                        data: data?.item
+                            ?.filter((x) => x.checkdetails_aggregate?.aggregate?.sum?.amount)
+                            .sort(
+                                (a, b) =>
+                                    b.checkdetails_aggregate.aggregate?.sum?.amount -
+                                    a.checkdetails_aggregate.aggregate?.sum?.amount
+                            )
+                            .slice(0, 5)
+                            .map((x) => x.checkdetails_aggregate?.aggregate?.sum?.amount || 0),
                         backgroundColor: [
                             "rgba(255, 99, 132, 0.2)",
                             "rgba(255, 159, 64, 0.2)",

@@ -1708,9 +1708,7 @@ input billdetail_variance_order_by {
   taxamount: order_by
 }
 
-"""
-columns and relationships of "billpayment"
-"""
+"""transactionid"""
 type billpayment {
   amountreceive: numeric!
 
@@ -1723,6 +1721,7 @@ type billpayment {
   paymentmethod: paymentmethod!
   paymentmethodid: Int!
   paymentmethodname: String!
+  transactionid: String
 }
 
 """
@@ -1809,6 +1808,7 @@ input billpayment_bool_exp {
   paymentmethod: paymentmethod_bool_exp
   paymentmethodid: Int_comparison_exp
   paymentmethodname: String_comparison_exp
+  transactionid: String_comparison_exp
 }
 
 """
@@ -1817,6 +1817,9 @@ unique or primary key constraints on table "billpayment"
 enum billpayment_constraint {
   """unique or primary key constraint"""
   billpayment_pkey
+
+  """unique or primary key constraint"""
+  billpayment_transactionid_key
 }
 
 """
@@ -1840,6 +1843,7 @@ input billpayment_insert_input {
   paymentmethod: paymentmethod_obj_rel_insert_input
   paymentmethodid: Int
   paymentmethodname: String
+  transactionid: String
 }
 
 """aggregate max on columns"""
@@ -1849,6 +1853,7 @@ type billpayment_max_fields {
   id: Int
   paymentmethodid: Int
   paymentmethodname: String
+  transactionid: String
 }
 
 """
@@ -1860,6 +1865,7 @@ input billpayment_max_order_by {
   id: order_by
   paymentmethodid: order_by
   paymentmethodname: order_by
+  transactionid: order_by
 }
 
 """aggregate min on columns"""
@@ -1869,6 +1875,7 @@ type billpayment_min_fields {
   id: Int
   paymentmethodid: Int
   paymentmethodname: String
+  transactionid: String
 }
 
 """
@@ -1880,6 +1887,7 @@ input billpayment_min_order_by {
   id: order_by
   paymentmethodid: order_by
   paymentmethodname: order_by
+  transactionid: order_by
 }
 
 """
@@ -1911,6 +1919,7 @@ input billpayment_order_by {
   paymentmethod: paymentmethod_order_by
   paymentmethodid: order_by
   paymentmethodname: order_by
+  transactionid: order_by
 }
 
 """primary key columns input for table: billpayment"""
@@ -1936,6 +1945,9 @@ enum billpayment_select_column {
 
   """column name"""
   paymentmethodname
+
+  """column name"""
+  transactionid
 }
 
 """
@@ -1947,6 +1959,7 @@ input billpayment_set_input {
   id: Int
   paymentmethodid: Int
   paymentmethodname: String
+  transactionid: String
 }
 
 """aggregate stddev on columns"""
@@ -2039,6 +2052,9 @@ enum billpayment_update_column {
 
   """column name"""
   paymentmethodname
+
+  """column name"""
+  transactionid
 }
 
 """aggregate var_pop on columns"""
@@ -2120,6 +2136,7 @@ type cashierlog {
   amount: numeric!
   creationtime: timestamp!
   id: Int!
+  isverify: Boolean!
 
   """An object relationship"""
   shift: shift!
@@ -2213,6 +2230,7 @@ input cashierlog_bool_exp {
   amount: numeric_comparison_exp
   creationtime: timestamp_comparison_exp
   id: Int_comparison_exp
+  isverify: Boolean_comparison_exp
   shift: shift_bool_exp
   shiftid: Int_comparison_exp
   type: cashierlog_type_comparison_exp
@@ -2248,6 +2266,7 @@ input cashierlog_insert_input {
   amount: numeric
   creationtime: timestamp
   id: Int
+  isverify: Boolean
   shift: shift_obj_rel_insert_input
   shiftid: Int
   type: cashierlog_type
@@ -2334,6 +2353,7 @@ input cashierlog_order_by {
   amount: order_by
   creationtime: order_by
   id: order_by
+  isverify: order_by
   shift: shift_order_by
   shiftid: order_by
   type: order_by
@@ -2363,6 +2383,9 @@ enum cashierlog_select_column {
   id
 
   """column name"""
+  isverify
+
+  """column name"""
   shiftid
 
   """column name"""
@@ -2383,6 +2406,7 @@ input cashierlog_set_input {
   amount: numeric
   creationtime: timestamp
   id: Int
+  isverify: Boolean
   shiftid: Int
   type: cashierlog_type
   updaterid: Int
@@ -2501,6 +2525,9 @@ enum cashierlog_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  isverify
 
   """column name"""
   shiftid
@@ -3425,7 +3452,7 @@ type checkdetail {
     where: checkdetailspecialrequest_bool_exp
   ): checkdetailspecialrequest_aggregate!
   checkid: Int!
-  completiontime: time
+  completiontime: timestamp
   id: Int!
   isreminded: Boolean!
 
@@ -3435,7 +3462,7 @@ type checkdetail {
   itemprice: numeric!
   note: String
   quantity: float8!
-  starttime: time!
+  starttime: timestamp!
   status: checkdetail_status!
   subtotal: numeric!
   taxamount: numeric!
@@ -3536,7 +3563,7 @@ input checkdetail_bool_exp {
   check: check_bool_exp
   checkdetailspecialrequests: checkdetailspecialrequest_bool_exp
   checkid: Int_comparison_exp
-  completiontime: time_comparison_exp
+  completiontime: timestamp_comparison_exp
   id: Int_comparison_exp
   isreminded: Boolean_comparison_exp
   item: item_bool_exp
@@ -3544,7 +3571,7 @@ input checkdetail_bool_exp {
   itemprice: numeric_comparison_exp
   note: String_comparison_exp
   quantity: float8_comparison_exp
-  starttime: time_comparison_exp
+  starttime: timestamp_comparison_exp
   status: checkdetail_status_comparison_exp
   subtotal: numeric_comparison_exp
   taxamount: numeric_comparison_exp
@@ -3583,7 +3610,7 @@ input checkdetail_insert_input {
   check: check_obj_rel_insert_input
   checkdetailspecialrequests: checkdetailspecialrequest_arr_rel_insert_input
   checkid: Int
-  completiontime: time
+  completiontime: timestamp
   id: Int
   isreminded: Boolean
   item: item_obj_rel_insert_input
@@ -3591,7 +3618,7 @@ input checkdetail_insert_input {
   itemprice: numeric
   note: String
   quantity: float8
-  starttime: time
+  starttime: timestamp
   status: checkdetail_status
   subtotal: numeric
   taxamount: numeric
@@ -3603,11 +3630,13 @@ input checkdetail_insert_input {
 type checkdetail_max_fields {
   amount: numeric
   checkid: Int
+  completiontime: timestamp
   id: Int
   itemid: Int
   itemprice: numeric
   note: String
   quantity: float8
+  starttime: timestamp
   status: checkdetail_status
   subtotal: numeric
   taxamount: numeric
@@ -3620,11 +3649,13 @@ order by max() on columns of table "checkdetail"
 input checkdetail_max_order_by {
   amount: order_by
   checkid: order_by
+  completiontime: order_by
   id: order_by
   itemid: order_by
   itemprice: order_by
   note: order_by
   quantity: order_by
+  starttime: order_by
   status: order_by
   subtotal: order_by
   taxamount: order_by
@@ -3635,11 +3666,13 @@ input checkdetail_max_order_by {
 type checkdetail_min_fields {
   amount: numeric
   checkid: Int
+  completiontime: timestamp
   id: Int
   itemid: Int
   itemprice: numeric
   note: String
   quantity: float8
+  starttime: timestamp
   status: checkdetail_status
   subtotal: numeric
   taxamount: numeric
@@ -3652,11 +3685,13 @@ order by min() on columns of table "checkdetail"
 input checkdetail_min_order_by {
   amount: order_by
   checkid: order_by
+  completiontime: order_by
   id: order_by
   itemid: order_by
   itemprice: order_by
   note: order_by
   quantity: order_by
+  starttime: order_by
   status: order_by
   subtotal: order_by
   taxamount: order_by
@@ -3773,14 +3808,14 @@ input type for updating data in table "checkdetail"
 input checkdetail_set_input {
   amount: numeric
   checkid: Int
-  completiontime: time
+  completiontime: timestamp
   id: Int
   isreminded: Boolean
   itemid: Int
   itemprice: numeric
   note: String
   quantity: float8
-  starttime: time
+  starttime: timestamp
   status: checkdetail_status
   subtotal: numeric
   taxamount: numeric
@@ -4923,6 +4958,7 @@ type itemoutofstock {
   """An object relationship"""
   item: item!
   itemid: Int!
+  status: outofstock_status!
 }
 
 """
@@ -4966,6 +5002,7 @@ input itemoutofstock_bool_exp {
   id: Int_comparison_exp
   item: item_bool_exp
   itemid: Int_comparison_exp
+  status: outofstock_status_comparison_exp
 }
 
 """
@@ -4994,18 +5031,21 @@ input itemoutofstock_insert_input {
   id: Int
   item: item_obj_rel_insert_input
   itemid: Int
+  status: outofstock_status
 }
 
 """aggregate max on columns"""
 type itemoutofstock_max_fields {
   id: Int
   itemid: Int
+  status: outofstock_status
 }
 
 """aggregate min on columns"""
 type itemoutofstock_min_fields {
   id: Int
   itemid: Int
+  status: outofstock_status
 }
 
 """
@@ -5043,6 +5083,7 @@ input itemoutofstock_order_by {
   id: order_by
   item: item_order_by
   itemid: order_by
+  status: order_by
 }
 
 """primary key columns input for table: itemoutofstock"""
@@ -5059,6 +5100,9 @@ enum itemoutofstock_select_column {
 
   """column name"""
   itemid
+
+  """column name"""
+  status
 }
 
 """
@@ -5067,6 +5111,7 @@ input type for updating data in table "itemoutofstock"
 input itemoutofstock_set_input {
   id: Int
   itemid: Int
+  status: outofstock_status
 }
 
 """aggregate stddev on columns"""
@@ -5102,6 +5147,9 @@ enum itemoutofstock_update_column {
 
   """column name"""
   itemid
+
+  """column name"""
+  status
 }
 
 """aggregate var_pop on columns"""
@@ -8167,6 +8215,23 @@ enum order_by {
   desc_nulls_last
 }
 
+scalar outofstock_status
+
+"""
+Boolean expression to compare columns of type "outofstock_status". All fields are combined with logical 'AND'.
+"""
+input outofstock_status_comparison_exp {
+  _eq: outofstock_status
+  _gt: outofstock_status
+  _gte: outofstock_status
+  _in: [outofstock_status!]
+  _is_null: Boolean
+  _lt: outofstock_status
+  _lte: outofstock_status
+  _neq: outofstock_status
+  _nin: [outofstock_status!]
+}
+
 """
 columns and relationships of "paymentmethod"
 """
@@ -9897,6 +9962,7 @@ type shift {
   openerid: Int
   starttime: time!
   status: basic_status!
+  transactionid: String
 
   """An object relationship"""
   worksession: worksession!
@@ -9990,6 +10056,7 @@ input shift_bool_exp {
   openerid: Int_comparison_exp
   starttime: time_comparison_exp
   status: basic_status_comparison_exp
+  transactionid: String_comparison_exp
   worksession: worksession_bool_exp
   worksessionid: Int_comparison_exp
 }
@@ -10026,6 +10093,7 @@ input shift_insert_input {
   openerid: Int
   starttime: time
   status: basic_status
+  transactionid: String
   worksession: worksession_obj_rel_insert_input
   worksessionid: Int
 }
@@ -10037,6 +10105,7 @@ type shift_max_fields {
   name: String
   openerid: Int
   status: basic_status
+  transactionid: String
   worksessionid: Int
 }
 
@@ -10049,6 +10118,7 @@ input shift_max_order_by {
   name: order_by
   openerid: order_by
   status: order_by
+  transactionid: order_by
   worksessionid: order_by
 }
 
@@ -10059,6 +10129,7 @@ type shift_min_fields {
   name: String
   openerid: Int
   status: basic_status
+  transactionid: String
   worksessionid: Int
 }
 
@@ -10071,6 +10142,7 @@ input shift_min_order_by {
   name: order_by
   openerid: order_by
   status: order_by
+  transactionid: order_by
   worksessionid: order_by
 }
 
@@ -10116,6 +10188,7 @@ input shift_order_by {
   openerid: order_by
   starttime: order_by
   status: order_by
+  transactionid: order_by
   worksession: worksession_order_by
   worksessionid: order_by
 }
@@ -10154,6 +10227,9 @@ enum shift_select_column {
   status
 
   """column name"""
+  transactionid
+
+  """column name"""
   worksessionid
 }
 
@@ -10169,6 +10245,7 @@ input shift_set_input {
   openerid: Int
   starttime: time
   status: basic_status
+  transactionid: String
   worksessionid: Int
 }
 
@@ -10271,6 +10348,9 @@ enum shift_update_column {
 
   """column name"""
   status
+
+  """column name"""
+  transactionid
 
   """column name"""
   worksessionid

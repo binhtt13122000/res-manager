@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import ChipBase from "components/Chip";
 import { BASIC_ENUM } from "utils/enums";
 import useSnackbar from "components/Snackbar/useSnackbar";
-import router from "next/router";
 import ItemForm, { ItemMutationType } from "containers/item/ItemForm";
 import useCreateItem from "hooks/item/useCreateItem";
 import useUpdateItem from "hooks/item/useUpdateItem";
@@ -15,7 +14,7 @@ const Item: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            router.push("/login");
+            window.location.replace("https://binhtruongthanh.tech/login");
         }
     }, []);
     const initData: ItemMutationType = {

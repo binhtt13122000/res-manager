@@ -6,7 +6,7 @@ import { IColumn } from "components/Table/models";
 import { format } from "date-fns";
 import { Billdetail, GetBillDetailQuery } from "generated/graphql";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useGetBill from "hooks/bill/useGetBill";
 import BillDetailForm from "containers/bill-detail/BillDetailForm";
@@ -14,6 +14,12 @@ import useGetBillDetail from "hooks/bill/useGetBillDetail";
 import { BILL_ENUM } from "utils/enums";
 
 const BillDetail: NextPage = () => {
+    useEffect(() => {
+        const userJson = localStorage.getItem("manager-user");
+        if (!userJson) {
+            window.location.replace("https://binhtruongthanh.tech/login");
+        }
+    }, []);
     const router = useRouter();
     const { id } = router.query;
     const { data, isLoading } = useGetBill(Number(id || 0));
@@ -398,6 +404,17 @@ const BillDetail: NextPage = () => {
                                                     currency: "VND",
                                                 }).format(data)}
                                             </CellTableTypography>
+                                        );
+                                    },
+                                },
+                                {
+                                    field: "transactionid",
+                                    title: "Mã đơn hàng",
+                                    index: 2,
+                                    type: "string",
+                                    render: (data: string) => {
+                                        return (
+                                            <CellTableTypography>{data || ""}</CellTableTypography>
                                         );
                                     },
                                 },

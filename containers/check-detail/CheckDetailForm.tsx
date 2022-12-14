@@ -6,6 +6,8 @@ import { IForm } from "utils/common";
 import CardContainer from "components/Card/Container";
 import { GetCheckDetailQuery } from "generated/graphql";
 import TextfieldBase from "components/BaseTextField";
+import { CHECK_DETAIL_ENUM } from "utils/enums";
+import { format } from "date-fns";
 // import CRUDTable from "components/Table";
 
 const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>> = (
@@ -76,7 +78,10 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.itemprice}
+                            value={new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                            }).format(data?.itemprice || 0)}
                         />
                         <TextfieldBase
                             id="quantity"
@@ -106,17 +111,23 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.subtotal}
+                            value={new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                            }).format(data?.subtotal || 0)}
                         />
                         <TextfieldBase
                             id="amount"
-                            label={"Tổng"}
+                            label={"Thành tiền"}
                             variant="outlined"
                             InputProps={{
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.amount}
+                            value={new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                            }).format(data?.amount || 0)}
                         />
                     </Grid>
                     <Grid
@@ -136,7 +147,10 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.starttime}
+                            value={format(
+                                new Date(data?.starttime || new Date()) || new Date(),
+                                "dd/MM/yyyy mm:hh:ss"
+                            )}
                         />
                         <TextfieldBase
                             id="completeTime"
@@ -166,7 +180,17 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.status}
+                            value={
+                                data?.status === CHECK_DETAIL_ENUM.WAITING
+                                    ? "Chờ đợi"
+                                    : data?.status === CHECK_DETAIL_ENUM.READY
+                                    ? "Chờ giao"
+                                    : data?.status === CHECK_DETAIL_ENUM.RECALL
+                                    ? "Cần hủy"
+                                    : data?.status === CHECK_DETAIL_ENUM.SERVED
+                                    ? "Đã giao"
+                                    : "Hủy"
+                            }
                         />
                         <TextfieldBase
                             id="isremind"
@@ -176,7 +200,7 @@ const CheckDetailForm: React.FC<IForm<GetCheckDetailQuery["checkdetail_by_pk"]>>
                                 readOnly: true,
                             }}
                             fullWidth
-                            value={data?.isreminded ? "Đúng" : "Sai"}
+                            value={data?.isreminded ? "Có" : "Không"}
                         />
                     </Grid>
                     <Grid

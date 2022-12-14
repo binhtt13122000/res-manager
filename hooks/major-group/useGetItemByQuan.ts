@@ -11,10 +11,7 @@ const useGetItemByQuan = (start: string, end: string) => {
             const result = queryClient.request<GetItemByQuanQuery, GetItemByQuanQueryVariables>(
                 gql`
                     query GetItemByQuan($_gte: timestamp = "", $_lte: timestamp = "") {
-                        item(
-                            limit: 5
-                            order_by: { checkdetails_aggregate: { sum: { quantity: asc } } }
-                        ) {
+                        item {
                             id
                             name
                             checkdetails_aggregate(

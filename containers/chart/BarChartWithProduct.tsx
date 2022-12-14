@@ -9,7 +9,10 @@ const BarChartWithProduct = () => {
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
     const day = new Date().getDate();
-    const { data, isLoading } = useGetItemByQuan(`${year}/${month}/01`, `${year}/${month}/${day}`);
+    const { data, isLoading } = useGetItemByQuan(
+        `${year}/${month}/01 00:00:00`,
+        `${year}/${month}/${day} 23:59:59`
+    );
 
     if (isLoading) {
         return null;
@@ -17,14 +20,28 @@ const BarChartWithProduct = () => {
     return (
         <Bar
             data={{
-                labels: data?.item?.map((x) => x.name),
+                labels: data?.item
+                    ?.filter((x) => x.checkdetails_aggregate?.aggregate?.sum?.quantity)
+                    .sort(
+                        (a, b) =>
+                            b.checkdetails_aggregate.aggregate?.sum?.quantity -
+                            a.checkdetails_aggregate.aggregate?.sum?.quantity
+                    )
+                    .slice(0, 5)
+                    .map((x) => x.name),
                 datasets: [
                     {
                         label: "Số lượng",
                         indexAxis: "y" as "x" | "y",
-                        data: data?.item?.map(
-                            (x) => x.checkdetails_aggregate?.aggregate?.sum?.quantity || 0
-                        ),
+                        data: data?.item
+                            ?.filter((x) => x.checkdetails_aggregate?.aggregate?.sum?.quantity)
+                            .sort(
+                                (a, b) =>
+                                    b.checkdetails_aggregate.aggregate?.sum?.quantity -
+                                    a.checkdetails_aggregate.aggregate?.sum?.quantity
+                            )
+                            .slice(0, 5)
+                            .map((x) => x.checkdetails_aggregate?.aggregate?.sum?.quantity || 0),
                         backgroundColor: [
                             "rgba(255, 99, 132, 0.2)",
                             "rgba(255, 159, 64, 0.2)",

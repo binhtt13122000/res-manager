@@ -47,18 +47,18 @@ const labels = ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T1
 export const LineChartYear = () => {
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
-    const { data: t1 } = useGetBillByTime(`${year}/01/01`, `${year}/01/31`, 1);
-    const { data: t2 } = useGetBillByTime(`${year}/02/01`, `${year}/02/28`, 2);
-    const { data: t3 } = useGetBillByTime(`${year}/03/01`, `${year}/03/31`, 3);
-    const { data: t4 } = useGetBillByTime(`${year}/04/01`, `${year}/04/30`, 4);
-    const { data: t5 } = useGetBillByTime(`${year}/05/01`, `${year}/05/31`, 5);
-    const { data: t6 } = useGetBillByTime(`${year}/06/01`, `${year}/06/30`, 6);
-    const { data: t7 } = useGetBillByTime(`${year}/07/01`, `${year}/07/31`, 7);
-    const { data: t8 } = useGetBillByTime(`${year}/08/01`, `${year}/08/31`, 8);
-    const { data: t9 } = useGetBillByTime(`${year}/09/01`, `${year}/09/30`, 9);
-    const { data: t10 } = useGetBillByTime(`${year}/10/01`, `${year}/10/31`, 10);
-    const { data: t11 } = useGetBillByTime(`${year}/11/01`, `${year}/11/30`, 11);
-    const { data: t12 } = useGetBillByTime(`${year}/12/01`, `${year}/12/31`, 12);
+    const { data: t1 } = useGetBillByTime(`${year}/01/01 00:00:00`, `${year}/01/31 23:59:59`, 1);
+    const { data: t2 } = useGetBillByTime(`${year}/02/01 00:00:00`, `${year}/02/28 23:59:59`, 2);
+    const { data: t3 } = useGetBillByTime(`${year}/03/01 00:00:00`, `${year}/03/31 23:59:59`, 3);
+    const { data: t4 } = useGetBillByTime(`${year}/04/01 00:00:00`, `${year}/04/30 23:59:59`, 4);
+    const { data: t5 } = useGetBillByTime(`${year}/05/01 00:00:00`, `${year}/05/31 23:59:59`, 5);
+    const { data: t6 } = useGetBillByTime(`${year}/06/01 00:00:00`, `${year}/06/30 23:59:59`, 6);
+    const { data: t7 } = useGetBillByTime(`${year}/07/01 00:00:00`, `${year}/07/31 23:59:59`, 7);
+    const { data: t8 } = useGetBillByTime(`${year}/08/01 00:00:00`, `${year}/08/31 23:59:59`, 8);
+    const { data: t9 } = useGetBillByTime(`${year}/09/01 00:00:00`, `${year}/09/30 23:59:59`, 9);
+    const { data: t10 } = useGetBillByTime(`${year}/10/01 00:00:00`, `${year}/10/31 23:59:59`, 10);
+    const { data: t11 } = useGetBillByTime(`${year}/11/01 00:00:00`, `${year}/11/30 23:59:59`, 11);
+    const { data: t12 } = useGetBillByTime(`${year}/12/01 00:00:00`, `${year}/12/31 23:59:59`, 12);
     return (
         <Line
             options={options}

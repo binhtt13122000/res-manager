@@ -21,6 +21,7 @@ const useTableQuery = (
             type: TypeRecord;
         }
     >,
+    args?: string,
     defaultFilter?: string,
     defaultFilterForCount?: string
 ) => {
@@ -198,6 +199,7 @@ const useTableQuery = (
             direction,
             defaultFilter,
             defaultFilterForCount,
+            args,
             ...Object.keys(filters)
                 .filter((x) => filters[x].type !== "index")
                 .map((x) => filters[x].value),
@@ -205,10 +207,12 @@ const useTableQuery = (
         async () => {
             const result = await queryClient.request(
                 gql`query ${queryKey}($limit: Int = 5, $offset: Int = 0, $direction: order_by = desc, ${filterString}) {
-                ${entity}(limit: $limit, offset: $offset, order_by: {${orderBy}: $direction}, where: {_and: [${filterStringInline}]}) {
+                ${entity}(${
+                    args ? `args: ${args},` : ""
+                }limit: $limit, offset: $offset, order_by: {${orderBy}: $direction}, where: {_and: [${filterStringInline}]}) {
                     ${queryString}
                 }
-                ${entity}_aggregate(where: {_and:[${
+                ${entity}_aggregate(${args ? `args: ${args},` : ""}where: {_and:[${
                     defaultFilterForCount ? defaultFilterForCount + ", " : ""
                 }${filterStringInline} ]}) {
                     aggregate {

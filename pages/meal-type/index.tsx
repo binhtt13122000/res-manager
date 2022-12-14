@@ -5,7 +5,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import ChipBase from "components/Chip";
 import { BASIC_ENUM } from "utils/enums";
 import useSnackbar from "components/Snackbar/useSnackbar";
-import router from "next/router";
 import MealTypeForm, { MealtypeMutationType } from "containers/meal-type/MealTypeForm";
 import useCreateMealtype from "hooks/meal-type/useCreateMealType";
 import useUpdateMealType from "hooks/meal-type/useUpdateMealType";
@@ -15,7 +14,7 @@ const MealType: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            router.push("/login");
+            window.location.replace("https://binhtruongthanh.tech/login");
         }
     }, []);
     const initData: MealtypeMutationType = {
@@ -209,7 +208,7 @@ const MealType: NextPage = () => {
             <CRUDTable
                 queryKey="MealtypeQuery"
                 columns={columns}
-                title={"Quản lý các bữa ăn"}
+                title={"Quản lý bữa ăn"}
                 entity="mealtype"
                 firstOrderField="id"
                 sort

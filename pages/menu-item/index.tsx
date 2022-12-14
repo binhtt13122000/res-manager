@@ -3,7 +3,6 @@ import { IColumn } from "components/Table/models";
 import { NextPage } from "next";
 import React, { useCallback, useEffect, useState } from "react";
 import useSnackbar from "components/Snackbar/useSnackbar";
-import router from "next/router";
 import MenuItemForm, { MenuItemMutationType } from "containers/menu-item/MenuItemForm";
 import useDeleteMenuItem from "hooks/menuitem/useDeleteMenuItem";
 import useCreateMenuItem from "hooks/menuitem/useCreateMenuItem";
@@ -14,7 +13,7 @@ const MenuItem: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            router.push("/login");
+            window.location.replace("https://binhtruongthanh.tech/login");
         }
     }, []);
 

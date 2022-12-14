@@ -12,7 +12,7 @@ const Bill: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            router.push("/login");
+            window.location.replace("https://binhtruongthanh.tech/login");
         }
     }, []);
 

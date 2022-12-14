@@ -9,12 +9,18 @@ import { Checkdetail, GetCheckDetailQuery } from "generated/graphql";
 import useGetCheck from "hooks/check/useGetCheck";
 import useGetCheckDetail from "hooks/check/useGetCheckDetail";
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CHECK_DETAIL_ENUM, CHECK_ENUM } from "utils/enums";
 import CheckDetailForm from "containers/check-detail/CheckDetailForm";
 
 const CheckDetail: NextPage = () => {
+    useEffect(() => {
+        const userJson = localStorage.getItem("manager-user");
+        if (!userJson) {
+            window.location.replace("https://binhtruongthanh.tech/login");
+        }
+    }, []);
     const router = useRouter();
     const { id } = router.query;
     const { data, isLoading } = useGetCheck(Number(id || 0));

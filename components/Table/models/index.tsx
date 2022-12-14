@@ -7,6 +7,7 @@ export interface ITable {
     title?: string;
     defaultFilter?: string;
     defaultFilterForCount?: string;
+    args?: string;
     headerColor?: "primary" | "secondary" | "standard";
     initParam?: string;
     action?: {
@@ -37,7 +38,7 @@ export interface IColumn {
         | "time"
         | "boolean"
         | "enum";
-    render?: (data?: any) => React.ReactElement;
+    render?: (data?: any, id?: number) => React.ReactElement;
     renderLink?: (data?: any) => string;
     disableSort?: boolean;
     disableFilter?: boolean;

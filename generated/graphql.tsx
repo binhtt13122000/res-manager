@@ -19,9 +19,11 @@ export type Scalars = {
     float8: any;
     json: any;
     numeric: any;
+    outofstock_status: any;
     table_status: any;
     time: any;
     timestamp: any;
+    timetz: any;
     user_status: any;
 };
 
@@ -36,6 +38,19 @@ export type Boolean_Comparison_Exp = {
     _lte?: InputMaybe<Scalars["Boolean"]>;
     _neq?: InputMaybe<Scalars["Boolean"]>;
     _nin?: InputMaybe<Array<Scalars["Boolean"]>>;
+};
+
+/** Boolean expression to compare columns of type "Float". All fields are combined with logical 'AND'. */
+export type Float_Comparison_Exp = {
+    _eq?: InputMaybe<Scalars["Float"]>;
+    _gt?: InputMaybe<Scalars["Float"]>;
+    _gte?: InputMaybe<Scalars["Float"]>;
+    _in?: InputMaybe<Array<Scalars["Float"]>>;
+    _is_null?: InputMaybe<Scalars["Boolean"]>;
+    _lt?: InputMaybe<Scalars["Float"]>;
+    _lte?: InputMaybe<Scalars["Float"]>;
+    _neq?: InputMaybe<Scalars["Float"]>;
+    _nin?: InputMaybe<Array<Scalars["Float"]>>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -1568,6 +1583,7 @@ export type Billpayment = {
     paymentmethod: Paymentmethod;
     paymentmethodid: Scalars["Int"];
     paymentmethodname: Scalars["String"];
+    transactionid?: Maybe<Scalars["String"]>;
 };
 
 /** aggregated selection of "billpayment" */
@@ -1650,12 +1666,15 @@ export type Billpayment_Bool_Exp = {
     paymentmethod?: InputMaybe<Paymentmethod_Bool_Exp>;
     paymentmethodid?: InputMaybe<Int_Comparison_Exp>;
     paymentmethodname?: InputMaybe<String_Comparison_Exp>;
+    transactionid?: InputMaybe<String_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "billpayment" */
 export enum Billpayment_Constraint {
     /** unique or primary key constraint */
     BillpaymentPkey = "billpayment_pkey",
+    /** unique or primary key constraint */
+    BillpaymentTransactionidKey = "billpayment_transactionid_key",
 }
 
 /** input type for incrementing numeric columns in table "billpayment" */
@@ -1675,6 +1694,7 @@ export type Billpayment_Insert_Input = {
     paymentmethod?: InputMaybe<Paymentmethod_Obj_Rel_Insert_Input>;
     paymentmethodid?: InputMaybe<Scalars["Int"]>;
     paymentmethodname?: InputMaybe<Scalars["String"]>;
+    transactionid?: InputMaybe<Scalars["String"]>;
 };
 
 /** aggregate max on columns */
@@ -1685,6 +1705,7 @@ export type Billpayment_Max_Fields = {
     id?: Maybe<Scalars["Int"]>;
     paymentmethodid?: Maybe<Scalars["Int"]>;
     paymentmethodname?: Maybe<Scalars["String"]>;
+    transactionid?: Maybe<Scalars["String"]>;
 };
 
 /** order by max() on columns of table "billpayment" */
@@ -1694,6 +1715,7 @@ export type Billpayment_Max_Order_By = {
     id?: InputMaybe<Order_By>;
     paymentmethodid?: InputMaybe<Order_By>;
     paymentmethodname?: InputMaybe<Order_By>;
+    transactionid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1704,6 +1726,7 @@ export type Billpayment_Min_Fields = {
     id?: Maybe<Scalars["Int"]>;
     paymentmethodid?: Maybe<Scalars["Int"]>;
     paymentmethodname?: Maybe<Scalars["String"]>;
+    transactionid?: Maybe<Scalars["String"]>;
 };
 
 /** order by min() on columns of table "billpayment" */
@@ -1713,6 +1736,7 @@ export type Billpayment_Min_Order_By = {
     id?: InputMaybe<Order_By>;
     paymentmethodid?: InputMaybe<Order_By>;
     paymentmethodname?: InputMaybe<Order_By>;
+    transactionid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "billpayment" */
@@ -1740,6 +1764,7 @@ export type Billpayment_Order_By = {
     paymentmethod?: InputMaybe<Paymentmethod_Order_By>;
     paymentmethodid?: InputMaybe<Order_By>;
     paymentmethodname?: InputMaybe<Order_By>;
+    transactionid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: billpayment */
@@ -1759,6 +1784,8 @@ export enum Billpayment_Select_Column {
     Paymentmethodid = "paymentmethodid",
     /** column name */
     Paymentmethodname = "paymentmethodname",
+    /** column name */
+    Transactionid = "transactionid",
 }
 
 /** input type for updating data in table "billpayment" */
@@ -1768,6 +1795,7 @@ export type Billpayment_Set_Input = {
     id?: InputMaybe<Scalars["Int"]>;
     paymentmethodid?: InputMaybe<Scalars["Int"]>;
     paymentmethodname?: InputMaybe<Scalars["String"]>;
+    transactionid?: InputMaybe<Scalars["String"]>;
 };
 
 /** aggregate stddev on columns */
@@ -1850,6 +1878,8 @@ export enum Billpayment_Update_Column {
     Paymentmethodid = "paymentmethodid",
     /** column name */
     Paymentmethodname = "paymentmethodname",
+    /** column name */
+    Transactionid = "transactionid",
 }
 
 /** aggregate var_pop on columns */
@@ -1912,6 +1942,7 @@ export type Cashierlog = {
     amount: Scalars["numeric"];
     creationtime: Scalars["timestamp"];
     id: Scalars["Int"];
+    isverify: Scalars["Boolean"];
     /** An object relationship */
     shift: Shift;
     shiftid: Scalars["Int"];
@@ -2000,6 +2031,7 @@ export type Cashierlog_Bool_Exp = {
     amount?: InputMaybe<Numeric_Comparison_Exp>;
     creationtime?: InputMaybe<Timestamp_Comparison_Exp>;
     id?: InputMaybe<Int_Comparison_Exp>;
+    isverify?: InputMaybe<Boolean_Comparison_Exp>;
     shift?: InputMaybe<Shift_Bool_Exp>;
     shiftid?: InputMaybe<Int_Comparison_Exp>;
     type?: InputMaybe<Cashierlog_Type_Comparison_Exp>;
@@ -2029,6 +2061,7 @@ export type Cashierlog_Insert_Input = {
     amount?: InputMaybe<Scalars["numeric"]>;
     creationtime?: InputMaybe<Scalars["timestamp"]>;
     id?: InputMaybe<Scalars["Int"]>;
+    isverify?: InputMaybe<Scalars["Boolean"]>;
     shift?: InputMaybe<Shift_Obj_Rel_Insert_Input>;
     shiftid?: InputMaybe<Scalars["Int"]>;
     type?: InputMaybe<Scalars["cashierlog_type"]>;
@@ -2109,6 +2142,7 @@ export type Cashierlog_Order_By = {
     amount?: InputMaybe<Order_By>;
     creationtime?: InputMaybe<Order_By>;
     id?: InputMaybe<Order_By>;
+    isverify?: InputMaybe<Order_By>;
     shift?: InputMaybe<Shift_Order_By>;
     shiftid?: InputMaybe<Order_By>;
     type?: InputMaybe<Order_By>;
@@ -2132,6 +2166,8 @@ export enum Cashierlog_Select_Column {
     /** column name */
     Id = "id",
     /** column name */
+    Isverify = "isverify",
+    /** column name */
     Shiftid = "shiftid",
     /** column name */
     Type = "type",
@@ -2147,6 +2183,7 @@ export type Cashierlog_Set_Input = {
     amount?: InputMaybe<Scalars["numeric"]>;
     creationtime?: InputMaybe<Scalars["timestamp"]>;
     id?: InputMaybe<Scalars["Int"]>;
+    isverify?: InputMaybe<Scalars["Boolean"]>;
     shiftid?: InputMaybe<Scalars["Int"]>;
     type?: InputMaybe<Scalars["cashierlog_type"]>;
     updaterid?: InputMaybe<Scalars["Int"]>;
@@ -2252,6 +2289,8 @@ export enum Cashierlog_Update_Column {
     Creationtime = "creationtime",
     /** column name */
     Id = "id",
+    /** column name */
+    Isverify = "isverify",
     /** column name */
     Shiftid = "shiftid",
     /** column name */
@@ -3034,7 +3073,7 @@ export type Checkdetail = {
     /** An aggregate relationship */
     checkdetailspecialrequests_aggregate: Checkdetailspecialrequest_Aggregate;
     checkid: Scalars["Int"];
-    completiontime?: Maybe<Scalars["time"]>;
+    completiontime?: Maybe<Scalars["timestamp"]>;
     id: Scalars["Int"];
     isreminded: Scalars["Boolean"];
     /** An object relationship */
@@ -3043,7 +3082,7 @@ export type Checkdetail = {
     itemprice: Scalars["numeric"];
     note?: Maybe<Scalars["String"]>;
     quantity: Scalars["float8"];
-    starttime: Scalars["time"];
+    starttime: Scalars["timestamp"];
     status: Scalars["checkdetail_status"];
     subtotal: Scalars["numeric"];
     taxamount: Scalars["numeric"];
@@ -3157,7 +3196,7 @@ export type Checkdetail_Bool_Exp = {
     check?: InputMaybe<Check_Bool_Exp>;
     checkdetailspecialrequests?: InputMaybe<Checkdetailspecialrequest_Bool_Exp>;
     checkid?: InputMaybe<Int_Comparison_Exp>;
-    completiontime?: InputMaybe<Time_Comparison_Exp>;
+    completiontime?: InputMaybe<Timestamp_Comparison_Exp>;
     id?: InputMaybe<Int_Comparison_Exp>;
     isreminded?: InputMaybe<Boolean_Comparison_Exp>;
     item?: InputMaybe<Item_Bool_Exp>;
@@ -3165,7 +3204,7 @@ export type Checkdetail_Bool_Exp = {
     itemprice?: InputMaybe<Numeric_Comparison_Exp>;
     note?: InputMaybe<String_Comparison_Exp>;
     quantity?: InputMaybe<Float8_Comparison_Exp>;
-    starttime?: InputMaybe<Time_Comparison_Exp>;
+    starttime?: InputMaybe<Timestamp_Comparison_Exp>;
     status?: InputMaybe<Checkdetail_Status_Comparison_Exp>;
     subtotal?: InputMaybe<Numeric_Comparison_Exp>;
     taxamount?: InputMaybe<Numeric_Comparison_Exp>;
@@ -3198,7 +3237,7 @@ export type Checkdetail_Insert_Input = {
     check?: InputMaybe<Check_Obj_Rel_Insert_Input>;
     checkdetailspecialrequests?: InputMaybe<Checkdetailspecialrequest_Arr_Rel_Insert_Input>;
     checkid?: InputMaybe<Scalars["Int"]>;
-    completiontime?: InputMaybe<Scalars["time"]>;
+    completiontime?: InputMaybe<Scalars["timestamp"]>;
     id?: InputMaybe<Scalars["Int"]>;
     isreminded?: InputMaybe<Scalars["Boolean"]>;
     item?: InputMaybe<Item_Obj_Rel_Insert_Input>;
@@ -3206,7 +3245,7 @@ export type Checkdetail_Insert_Input = {
     itemprice?: InputMaybe<Scalars["numeric"]>;
     note?: InputMaybe<Scalars["String"]>;
     quantity?: InputMaybe<Scalars["float8"]>;
-    starttime?: InputMaybe<Scalars["time"]>;
+    starttime?: InputMaybe<Scalars["timestamp"]>;
     status?: InputMaybe<Scalars["checkdetail_status"]>;
     subtotal?: InputMaybe<Scalars["numeric"]>;
     taxamount?: InputMaybe<Scalars["numeric"]>;
@@ -3219,11 +3258,13 @@ export type Checkdetail_Max_Fields = {
     __typename?: "checkdetail_max_fields";
     amount?: Maybe<Scalars["numeric"]>;
     checkid?: Maybe<Scalars["Int"]>;
+    completiontime?: Maybe<Scalars["timestamp"]>;
     id?: Maybe<Scalars["Int"]>;
     itemid?: Maybe<Scalars["Int"]>;
     itemprice?: Maybe<Scalars["numeric"]>;
     note?: Maybe<Scalars["String"]>;
     quantity?: Maybe<Scalars["float8"]>;
+    starttime?: Maybe<Scalars["timestamp"]>;
     status?: Maybe<Scalars["checkdetail_status"]>;
     subtotal?: Maybe<Scalars["numeric"]>;
     taxamount?: Maybe<Scalars["numeric"]>;
@@ -3234,11 +3275,13 @@ export type Checkdetail_Max_Fields = {
 export type Checkdetail_Max_Order_By = {
     amount?: InputMaybe<Order_By>;
     checkid?: InputMaybe<Order_By>;
+    completiontime?: InputMaybe<Order_By>;
     id?: InputMaybe<Order_By>;
     itemid?: InputMaybe<Order_By>;
     itemprice?: InputMaybe<Order_By>;
     note?: InputMaybe<Order_By>;
     quantity?: InputMaybe<Order_By>;
+    starttime?: InputMaybe<Order_By>;
     status?: InputMaybe<Order_By>;
     subtotal?: InputMaybe<Order_By>;
     taxamount?: InputMaybe<Order_By>;
@@ -3250,11 +3293,13 @@ export type Checkdetail_Min_Fields = {
     __typename?: "checkdetail_min_fields";
     amount?: Maybe<Scalars["numeric"]>;
     checkid?: Maybe<Scalars["Int"]>;
+    completiontime?: Maybe<Scalars["timestamp"]>;
     id?: Maybe<Scalars["Int"]>;
     itemid?: Maybe<Scalars["Int"]>;
     itemprice?: Maybe<Scalars["numeric"]>;
     note?: Maybe<Scalars["String"]>;
     quantity?: Maybe<Scalars["float8"]>;
+    starttime?: Maybe<Scalars["timestamp"]>;
     status?: Maybe<Scalars["checkdetail_status"]>;
     subtotal?: Maybe<Scalars["numeric"]>;
     taxamount?: Maybe<Scalars["numeric"]>;
@@ -3265,11 +3310,13 @@ export type Checkdetail_Min_Fields = {
 export type Checkdetail_Min_Order_By = {
     amount?: InputMaybe<Order_By>;
     checkid?: InputMaybe<Order_By>;
+    completiontime?: InputMaybe<Order_By>;
     id?: InputMaybe<Order_By>;
     itemid?: InputMaybe<Order_By>;
     itemprice?: InputMaybe<Order_By>;
     note?: InputMaybe<Order_By>;
     quantity?: InputMaybe<Order_By>;
+    starttime?: InputMaybe<Order_By>;
     status?: InputMaybe<Order_By>;
     subtotal?: InputMaybe<Order_By>;
     taxamount?: InputMaybe<Order_By>;
@@ -3362,14 +3409,14 @@ export enum Checkdetail_Select_Column {
 export type Checkdetail_Set_Input = {
     amount?: InputMaybe<Scalars["numeric"]>;
     checkid?: InputMaybe<Scalars["Int"]>;
-    completiontime?: InputMaybe<Scalars["time"]>;
+    completiontime?: InputMaybe<Scalars["timestamp"]>;
     id?: InputMaybe<Scalars["Int"]>;
     isreminded?: InputMaybe<Scalars["Boolean"]>;
     itemid?: InputMaybe<Scalars["Int"]>;
     itemprice?: InputMaybe<Scalars["numeric"]>;
     note?: InputMaybe<Scalars["String"]>;
     quantity?: InputMaybe<Scalars["float8"]>;
-    starttime?: InputMaybe<Scalars["time"]>;
+    starttime?: InputMaybe<Scalars["timestamp"]>;
     status?: InputMaybe<Scalars["checkdetail_status"]>;
     subtotal?: InputMaybe<Scalars["numeric"]>;
     taxamount?: InputMaybe<Scalars["numeric"]>;
@@ -4342,6 +4389,7 @@ export type Itemoutofstock = {
     /** An object relationship */
     item: Item;
     itemid: Scalars["Int"];
+    status: Scalars["outofstock_status"];
 };
 
 /** aggregated selection of "itemoutofstock" */
@@ -4388,6 +4436,7 @@ export type Itemoutofstock_Bool_Exp = {
     id?: InputMaybe<Int_Comparison_Exp>;
     item?: InputMaybe<Item_Bool_Exp>;
     itemid?: InputMaybe<Int_Comparison_Exp>;
+    status?: InputMaybe<Outofstock_Status_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "itemoutofstock" */
@@ -4409,6 +4458,7 @@ export type Itemoutofstock_Insert_Input = {
     id?: InputMaybe<Scalars["Int"]>;
     item?: InputMaybe<Item_Obj_Rel_Insert_Input>;
     itemid?: InputMaybe<Scalars["Int"]>;
+    status?: InputMaybe<Scalars["outofstock_status"]>;
 };
 
 /** aggregate max on columns */
@@ -4416,6 +4466,7 @@ export type Itemoutofstock_Max_Fields = {
     __typename?: "itemoutofstock_max_fields";
     id?: Maybe<Scalars["Int"]>;
     itemid?: Maybe<Scalars["Int"]>;
+    status?: Maybe<Scalars["outofstock_status"]>;
 };
 
 /** aggregate min on columns */
@@ -4423,6 +4474,7 @@ export type Itemoutofstock_Min_Fields = {
     __typename?: "itemoutofstock_min_fields";
     id?: Maybe<Scalars["Int"]>;
     itemid?: Maybe<Scalars["Int"]>;
+    status?: Maybe<Scalars["outofstock_status"]>;
 };
 
 /** response of any mutation on the table "itemoutofstock" */
@@ -4453,6 +4505,7 @@ export type Itemoutofstock_Order_By = {
     id?: InputMaybe<Order_By>;
     item?: InputMaybe<Item_Order_By>;
     itemid?: InputMaybe<Order_By>;
+    status?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: itemoutofstock */
@@ -4466,12 +4519,15 @@ export enum Itemoutofstock_Select_Column {
     Id = "id",
     /** column name */
     Itemid = "itemid",
+    /** column name */
+    Status = "status",
 }
 
 /** input type for updating data in table "itemoutofstock" */
 export type Itemoutofstock_Set_Input = {
     id?: InputMaybe<Scalars["Int"]>;
     itemid?: InputMaybe<Scalars["Int"]>;
+    status?: InputMaybe<Scalars["outofstock_status"]>;
 };
 
 /** aggregate stddev on columns */
@@ -4508,6 +4564,8 @@ export enum Itemoutofstock_Update_Column {
     Id = "id",
     /** column name */
     Itemid = "itemid",
+    /** column name */
+    Status = "status",
 }
 
 /** aggregate var_pop on columns */
@@ -5978,6 +6036,10 @@ export type Mutation_Root = {
     delete_table?: Maybe<Table_Mutation_Response>;
     /** delete single row from the table: "table" */
     delete_table_by_pk?: Maybe<Table>;
+    /** delete data from the table: "tmp" */
+    delete_tmp?: Maybe<Tmp_Mutation_Response>;
+    /** delete single row from the table: "tmp" */
+    delete_tmp_by_pk?: Maybe<Tmp>;
     /** delete data from the table: "voidreason" */
     delete_voidreason?: Maybe<Voidreason_Mutation_Response>;
     /** delete single row from the table: "voidreason" */
@@ -6074,6 +6136,10 @@ export type Mutation_Root = {
     insert_table?: Maybe<Table_Mutation_Response>;
     /** insert a single row into the table: "table" */
     insert_table_one?: Maybe<Table>;
+    /** insert data into the table: "tmp" */
+    insert_tmp?: Maybe<Tmp_Mutation_Response>;
+    /** insert a single row into the table: "tmp" */
+    insert_tmp_one?: Maybe<Tmp>;
     /** insert data into the table: "voidreason" */
     insert_voidreason?: Maybe<Voidreason_Mutation_Response>;
     /** insert a single row into the table: "voidreason" */
@@ -6170,6 +6236,10 @@ export type Mutation_Root = {
     update_table?: Maybe<Table_Mutation_Response>;
     /** update single row of the table: "table" */
     update_table_by_pk?: Maybe<Table>;
+    /** update data of the table: "tmp" */
+    update_tmp?: Maybe<Tmp_Mutation_Response>;
+    /** update single row of the table: "tmp" */
+    update_tmp_by_pk?: Maybe<Tmp>;
     /** update data of the table: "voidreason" */
     update_voidreason?: Maybe<Voidreason_Mutation_Response>;
     /** update single row of the table: "voidreason" */
@@ -6397,6 +6467,16 @@ export type Mutation_RootDelete_TableArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Table_By_PkArgs = {
+    id: Scalars["Int"];
+};
+
+/** mutation root */
+export type Mutation_RootDelete_TmpArgs = {
+    where: Tmp_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootDelete_Tmp_By_PkArgs = {
     id: Scalars["Int"];
 };
 
@@ -6682,6 +6762,18 @@ export type Mutation_RootInsert_TableArgs = {
 export type Mutation_RootInsert_Table_OneArgs = {
     object: Table_Insert_Input;
     on_conflict?: InputMaybe<Table_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_TmpArgs = {
+    objects: Array<Tmp_Insert_Input>;
+    on_conflict?: InputMaybe<Tmp_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootInsert_Tmp_OneArgs = {
+    object: Tmp_Insert_Input;
+    on_conflict?: InputMaybe<Tmp_On_Conflict>;
 };
 
 /** mutation root */
@@ -7015,6 +7107,20 @@ export type Mutation_RootUpdate_Table_By_PkArgs = {
 };
 
 /** mutation root */
+export type Mutation_RootUpdate_TmpArgs = {
+    _inc?: InputMaybe<Tmp_Inc_Input>;
+    _set?: InputMaybe<Tmp_Set_Input>;
+    where: Tmp_Bool_Exp;
+};
+
+/** mutation root */
+export type Mutation_RootUpdate_Tmp_By_PkArgs = {
+    _inc?: InputMaybe<Tmp_Inc_Input>;
+    _set?: InputMaybe<Tmp_Set_Input>;
+    pk_columns: Tmp_Pk_Columns_Input;
+};
+
+/** mutation root */
 export type Mutation_RootUpdate_VoidreasonArgs = {
     _inc?: InputMaybe<Voidreason_Inc_Input>;
     _set?: InputMaybe<Voidreason_Set_Input>;
@@ -7070,6 +7176,19 @@ export enum Order_By {
     /** in descending order, nulls last */
     DescNullsLast = "desc_nulls_last",
 }
+
+/** Boolean expression to compare columns of type "outofstock_status". All fields are combined with logical 'AND'. */
+export type Outofstock_Status_Comparison_Exp = {
+    _eq?: InputMaybe<Scalars["outofstock_status"]>;
+    _gt?: InputMaybe<Scalars["outofstock_status"]>;
+    _gte?: InputMaybe<Scalars["outofstock_status"]>;
+    _in?: InputMaybe<Array<Scalars["outofstock_status"]>>;
+    _is_null?: InputMaybe<Scalars["Boolean"]>;
+    _lt?: InputMaybe<Scalars["outofstock_status"]>;
+    _lte?: InputMaybe<Scalars["outofstock_status"]>;
+    _neq?: InputMaybe<Scalars["outofstock_status"]>;
+    _nin?: InputMaybe<Array<Scalars["outofstock_status"]>>;
+};
 
 /** columns and relationships of "paymentmethod" */
 export type Paymentmethod = {
@@ -7391,6 +7510,10 @@ export type Query_Root = {
     role_aggregate: Role_Aggregate;
     /** fetch data from the table: "role" using primary key columns */
     role_by_pk?: Maybe<Role>;
+    /** execute function "search_articles" which returns "tmp" */
+    search_articles: Array<Tmp>;
+    /** execute function "search_articles" and query aggregates on result of table type "tmp" */
+    search_articles_aggregate: Tmp_Aggregate;
     /** fetch data from the table: "sessions" */
     sessions: Array<Sessions>;
     /** fetch aggregated fields from the table: "sessions" */
@@ -7421,6 +7544,12 @@ export type Query_Root = {
     table_aggregate: Table_Aggregate;
     /** fetch data from the table: "table" using primary key columns */
     table_by_pk?: Maybe<Table>;
+    /** fetch data from the table: "tmp" */
+    tmp: Array<Tmp>;
+    /** fetch aggregated fields from the table: "tmp" */
+    tmp_aggregate: Tmp_Aggregate;
+    /** fetch data from the table: "tmp" using primary key columns */
+    tmp_by_pk?: Maybe<Tmp>;
     /** fetch data from the table: "voidreason" */
     voidreason: Array<Voidreason>;
     /** fetch aggregated fields from the table: "voidreason" */
@@ -7775,6 +7904,24 @@ export type Query_RootRole_By_PkArgs = {
     id: Scalars["Int"];
 };
 
+export type Query_RootSearch_ArticlesArgs = {
+    args: Search_Articles_Args;
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Query_RootSearch_Articles_AggregateArgs = {
+    args: Search_Articles_Args;
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
 export type Query_RootSessionsArgs = {
     distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
     limit?: InputMaybe<Scalars["Int"]>;
@@ -7872,6 +8019,26 @@ export type Query_RootTable_AggregateArgs = {
 };
 
 export type Query_RootTable_By_PkArgs = {
+    id: Scalars["Int"];
+};
+
+export type Query_RootTmpArgs = {
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Query_RootTmp_AggregateArgs = {
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Query_RootTmp_By_PkArgs = {
     id: Scalars["Int"];
 };
 
@@ -8120,6 +8287,11 @@ export type Role_Var_Samp_Fields = {
 export type Role_Variance_Fields = {
     __typename?: "role_variance_fields";
     id?: Maybe<Scalars["Float"]>;
+};
+
+export type Search_Articles_Args = {
+    x?: InputMaybe<Scalars["timestamp"]>;
+    y?: InputMaybe<Scalars["timestamp"]>;
 };
 
 /** columns and relationships of "sessions" */
@@ -9118,6 +9290,10 @@ export type Subscription_Root = {
     role_aggregate: Role_Aggregate;
     /** fetch data from the table: "role" using primary key columns */
     role_by_pk?: Maybe<Role>;
+    /** execute function "search_articles" which returns "tmp" */
+    search_articles: Array<Tmp>;
+    /** execute function "search_articles" and query aggregates on result of table type "tmp" */
+    search_articles_aggregate: Tmp_Aggregate;
     /** fetch data from the table: "sessions" */
     sessions: Array<Sessions>;
     /** fetch aggregated fields from the table: "sessions" */
@@ -9148,6 +9324,12 @@ export type Subscription_Root = {
     table_aggregate: Table_Aggregate;
     /** fetch data from the table: "table" using primary key columns */
     table_by_pk?: Maybe<Table>;
+    /** fetch data from the table: "tmp" */
+    tmp: Array<Tmp>;
+    /** fetch aggregated fields from the table: "tmp" */
+    tmp_aggregate: Tmp_Aggregate;
+    /** fetch data from the table: "tmp" using primary key columns */
+    tmp_by_pk?: Maybe<Tmp>;
     /** fetch data from the table: "voidreason" */
     voidreason: Array<Voidreason>;
     /** fetch aggregated fields from the table: "voidreason" */
@@ -9502,6 +9684,24 @@ export type Subscription_RootRole_By_PkArgs = {
     id: Scalars["Int"];
 };
 
+export type Subscription_RootSearch_ArticlesArgs = {
+    args: Search_Articles_Args;
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Subscription_RootSearch_Articles_AggregateArgs = {
+    args: Search_Articles_Args;
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
 export type Subscription_RootSessionsArgs = {
     distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
     limit?: InputMaybe<Scalars["Int"]>;
@@ -9599,6 +9799,26 @@ export type Subscription_RootTable_AggregateArgs = {
 };
 
 export type Subscription_RootTable_By_PkArgs = {
+    id: Scalars["Int"];
+};
+
+export type Subscription_RootTmpArgs = {
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Subscription_RootTmp_AggregateArgs = {
+    distinct_on?: InputMaybe<Array<Tmp_Select_Column>>;
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    order_by?: InputMaybe<Array<Tmp_Order_By>>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+export type Subscription_RootTmp_By_PkArgs = {
     id: Scalars["Int"];
 };
 
@@ -10253,6 +10473,222 @@ export type Timestamp_Comparison_Exp = {
     _nin?: InputMaybe<Array<Scalars["timestamp"]>>;
 };
 
+/** Boolean expression to compare columns of type "timetz". All fields are combined with logical 'AND'. */
+export type Timetz_Comparison_Exp = {
+    _eq?: InputMaybe<Scalars["timetz"]>;
+    _gt?: InputMaybe<Scalars["timetz"]>;
+    _gte?: InputMaybe<Scalars["timetz"]>;
+    _in?: InputMaybe<Array<Scalars["timetz"]>>;
+    _is_null?: InputMaybe<Scalars["Boolean"]>;
+    _lt?: InputMaybe<Scalars["timetz"]>;
+    _lte?: InputMaybe<Scalars["timetz"]>;
+    _neq?: InputMaybe<Scalars["timetz"]>;
+    _nin?: InputMaybe<Array<Scalars["timetz"]>>;
+};
+
+/** columns and relationships of "tmp" */
+export type Tmp = {
+    __typename?: "tmp";
+    averagetime: Scalars["timetz"];
+    id: Scalars["Int"];
+    name: Scalars["String"];
+    quantity: Scalars["Float"];
+};
+
+export type Tmp_Aggregate = {
+    __typename?: "tmp_aggregate";
+    aggregate?: Maybe<Tmp_Aggregate_Fields>;
+    nodes: Array<Tmp>;
+};
+
+/** aggregate fields of "tmp" */
+export type Tmp_Aggregate_Fields = {
+    __typename?: "tmp_aggregate_fields";
+    avg?: Maybe<Tmp_Avg_Fields>;
+    count: Scalars["Int"];
+    max?: Maybe<Tmp_Max_Fields>;
+    min?: Maybe<Tmp_Min_Fields>;
+    stddev?: Maybe<Tmp_Stddev_Fields>;
+    stddev_pop?: Maybe<Tmp_Stddev_Pop_Fields>;
+    stddev_samp?: Maybe<Tmp_Stddev_Samp_Fields>;
+    sum?: Maybe<Tmp_Sum_Fields>;
+    var_pop?: Maybe<Tmp_Var_Pop_Fields>;
+    var_samp?: Maybe<Tmp_Var_Samp_Fields>;
+    variance?: Maybe<Tmp_Variance_Fields>;
+};
+
+/** aggregate fields of "tmp" */
+export type Tmp_Aggregate_FieldsCountArgs = {
+    columns?: InputMaybe<Array<Tmp_Select_Column>>;
+    distinct?: InputMaybe<Scalars["Boolean"]>;
+};
+
+/** aggregate avg on columns */
+export type Tmp_Avg_Fields = {
+    __typename?: "tmp_avg_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** Boolean expression to filter rows from the table "tmp". All fields are combined with a logical 'AND'. */
+export type Tmp_Bool_Exp = {
+    _and?: InputMaybe<Array<Tmp_Bool_Exp>>;
+    _not?: InputMaybe<Tmp_Bool_Exp>;
+    _or?: InputMaybe<Array<Tmp_Bool_Exp>>;
+    averagetime?: InputMaybe<Timetz_Comparison_Exp>;
+    id?: InputMaybe<Int_Comparison_Exp>;
+    name?: InputMaybe<String_Comparison_Exp>;
+    quantity?: InputMaybe<Float_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "tmp" */
+export enum Tmp_Constraint {
+    /** unique or primary key constraint */
+    TmpPkey = "tmp_pkey",
+}
+
+/** input type for incrementing numeric columns in table "tmp" */
+export type Tmp_Inc_Input = {
+    id?: InputMaybe<Scalars["Int"]>;
+    quantity?: InputMaybe<Scalars["Float"]>;
+};
+
+/** input type for inserting data into table "tmp" */
+export type Tmp_Insert_Input = {
+    averagetime?: InputMaybe<Scalars["timetz"]>;
+    id?: InputMaybe<Scalars["Int"]>;
+    name?: InputMaybe<Scalars["String"]>;
+    quantity?: InputMaybe<Scalars["Float"]>;
+};
+
+/** aggregate max on columns */
+export type Tmp_Max_Fields = {
+    __typename?: "tmp_max_fields";
+    averagetime?: Maybe<Scalars["timetz"]>;
+    id?: Maybe<Scalars["Int"]>;
+    name?: Maybe<Scalars["String"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate min on columns */
+export type Tmp_Min_Fields = {
+    __typename?: "tmp_min_fields";
+    averagetime?: Maybe<Scalars["timetz"]>;
+    id?: Maybe<Scalars["Int"]>;
+    name?: Maybe<Scalars["String"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** response of any mutation on the table "tmp" */
+export type Tmp_Mutation_Response = {
+    __typename?: "tmp_mutation_response";
+    /** number of rows affected by the mutation */
+    affected_rows: Scalars["Int"];
+    /** data from the rows affected by the mutation */
+    returning: Array<Tmp>;
+};
+
+/** on_conflict condition type for table "tmp" */
+export type Tmp_On_Conflict = {
+    constraint: Tmp_Constraint;
+    update_columns?: Array<Tmp_Update_Column>;
+    where?: InputMaybe<Tmp_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "tmp". */
+export type Tmp_Order_By = {
+    averagetime?: InputMaybe<Order_By>;
+    id?: InputMaybe<Order_By>;
+    name?: InputMaybe<Order_By>;
+    quantity?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: tmp */
+export type Tmp_Pk_Columns_Input = {
+    id: Scalars["Int"];
+};
+
+/** select columns of table "tmp" */
+export enum Tmp_Select_Column {
+    /** column name */
+    Averagetime = "averagetime",
+    /** column name */
+    Id = "id",
+    /** column name */
+    Name = "name",
+    /** column name */
+    Quantity = "quantity",
+}
+
+/** input type for updating data in table "tmp" */
+export type Tmp_Set_Input = {
+    averagetime?: InputMaybe<Scalars["timetz"]>;
+    id?: InputMaybe<Scalars["Int"]>;
+    name?: InputMaybe<Scalars["String"]>;
+    quantity?: InputMaybe<Scalars["Float"]>;
+};
+
+/** aggregate stddev on columns */
+export type Tmp_Stddev_Fields = {
+    __typename?: "tmp_stddev_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Tmp_Stddev_Pop_Fields = {
+    __typename?: "tmp_stddev_pop_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Tmp_Stddev_Samp_Fields = {
+    __typename?: "tmp_stddev_samp_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate sum on columns */
+export type Tmp_Sum_Fields = {
+    __typename?: "tmp_sum_fields";
+    id?: Maybe<Scalars["Int"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** update columns of table "tmp" */
+export enum Tmp_Update_Column {
+    /** column name */
+    Averagetime = "averagetime",
+    /** column name */
+    Id = "id",
+    /** column name */
+    Name = "name",
+    /** column name */
+    Quantity = "quantity",
+}
+
+/** aggregate var_pop on columns */
+export type Tmp_Var_Pop_Fields = {
+    __typename?: "tmp_var_pop_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate var_samp on columns */
+export type Tmp_Var_Samp_Fields = {
+    __typename?: "tmp_var_samp_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
+/** aggregate variance on columns */
+export type Tmp_Variance_Fields = {
+    __typename?: "tmp_variance_fields";
+    id?: Maybe<Scalars["Float"]>;
+    quantity?: Maybe<Scalars["Float"]>;
+};
+
 /** Boolean expression to compare columns of type "user_status". All fields are combined with logical 'AND'. */
 export type User_Status_Comparison_Exp = {
     _eq?: InputMaybe<Scalars["user_status"]>;
@@ -10886,6 +11322,16 @@ export type GetBillDetailQuery = {
     } | null;
 };
 
+export type UpdateCashierLogMutationVariables = Exact<{
+    id?: InputMaybe<Scalars["Int"]>;
+    isverify?: InputMaybe<Scalars["Boolean"]>;
+}>;
+
+export type UpdateCashierLogMutation = {
+    __typename?: "mutation_root";
+    update_cashierlog_by_pk?: { __typename?: "cashierlog"; isverify: boolean } | null;
+};
+
 export type GetCheckQueryVariables = Exact<{
     id?: InputMaybe<Scalars["Int"]>;
 }>;
@@ -11019,6 +11465,25 @@ export type GetCoverByTimeQuery = {
             sum?: { __typename?: "check_sum_fields"; cover?: number | null } | null;
         } | null;
     };
+};
+
+export type QuanQueryQueryVariables = Exact<{
+    limit?: InputMaybe<Scalars["Int"]>;
+    offset?: InputMaybe<Scalars["Int"]>;
+    direction?: InputMaybe<Order_By>;
+    x?: InputMaybe<Scalars["timestamp"]>;
+    y?: InputMaybe<Scalars["timestamp"]>;
+}>;
+
+export type QuanQueryQuery = {
+    __typename?: "query_root";
+    search_articles: Array<{
+        __typename?: "tmp";
+        id: number;
+        name: string;
+        quantity: number;
+        averagetime: any;
+    }>;
 };
 
 export type CreateItemMutationVariables = Exact<{

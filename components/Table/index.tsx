@@ -30,6 +30,7 @@ import { useQueryClient } from "react-query";
 const HasuraTable = (props: ITable & { children?: React.ReactNode }) => {
     const cache = useQueryClient();
     const {
+        args,
         columns,
         entity,
         firstOrderField,
@@ -159,6 +160,7 @@ const HasuraTable = (props: ITable & { children?: React.ReactNode }) => {
         orderBy.field,
         orderBy.order,
         filters,
+        args,
         defaultFilter,
         defaultFilterForCount
     );

@@ -7,7 +7,10 @@ const Donut = () => {
     const month = new Date().getMonth() + 1;
     const year = new Date().getFullYear();
     const day = new Date().getDate();
-    const { data: dataPM, isLoading } = useGetPM(`${year}/${month}/01`, `${year}/${month}/${day}`);
+    const { data: dataPM, isLoading } = useGetPM(
+        `${year}/${month}/01 00:00:00`,
+        `${year}/${month}/${day} 23:59:59`
+    );
 
     if (isLoading) {
         return null;
