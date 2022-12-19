@@ -37,7 +37,7 @@ const CashierLog: NextPage = () => {
         },
         {
             field: "account",
-            title: "Tài khoản",
+            title: "Tên thu ngân",
             index: 4,
             type: "object",
             subField: "fullname",

@@ -58,7 +58,7 @@ const TableForm: React.FC<IForm<SpecialRequestMutationType>> = (
                         onSuccess(dataLc) {
                             if (dataLc.majorgroup_by_pk?.status === "INACTIVE") {
                                 showSnackbar({
-                                    children: "Nhóm thức ăn này không hoạt động",
+                                    children: "Nhóm món ăn này không hoạt động",
                                     severity: "error",
                                 });
                                 return;
@@ -160,14 +160,14 @@ const TableForm: React.FC<IForm<SpecialRequestMutationType>> = (
                             rules={{
                                 min: {
                                     value: 1,
-                                    message: "Nhóm thức ăn là bắt buộc",
+                                    message: "Nhóm món ăn là bắt buộc",
                                 },
                             }}
                             readonly={isView}
                             name="majorgroupid"
                             entity="majorgroup"
                             displayField="name"
-                            label={"Nhóm thức ăn"}
+                            label={"Nhóm món ăn"}
                             fullWidth
                             required
                         />

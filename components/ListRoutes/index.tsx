@@ -348,13 +348,11 @@ const ListRoutes: React.FC<ListRoutesType> = ({ appbarHeight, user }) => {
                                             component="span"
                                             variant="body2"
                                         >
-                                            MANAGER
+                                            Quản lý viên
                                         </Typography>
                                     </React.Fragment>
                                 }
-                            >
-                                {`Restaurant Manager`}
-                            </ListItemText>
+                            ></ListItemText>
                             {openUserInfo ? <ExpandLess /> : <ExpandMore />}
                         </ListItem>
                         <Collapse in={openUserInfo} timeout="auto" unmountOnExit>

@@ -34,14 +34,14 @@ const Bill: NextPage = () => {
         },
         {
             field: "billno",
-            title: "Mã đơn hàng",
+            title: "Mã hóa đơn",
             index: 3,
             type: "number",
             disableFilter: true,
         },
         {
             field: "totaltax",
-            title: "Tổng thuế",
+            title: "Thuế",
             index: 4,
             type: "number",
             disableFilter: true,
@@ -58,7 +58,7 @@ const Bill: NextPage = () => {
         },
         {
             field: "totalamount",
-            title: "Tổng tiền",
+            title: "Thành tiền",
             index: 5,
             type: "number",
             disableFilter: true,

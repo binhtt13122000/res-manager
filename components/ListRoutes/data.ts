@@ -42,6 +42,12 @@ export const routes = [
                 path: ROUTES.SPECIAL_REQUEST,
                 icon: "/manager/images/select.png",
             },
+            {
+                id: 2.6,
+                name: "Quản lý bữa ăn",
+                icon: "/manager/images/select.png",
+                path: ROUTES.MEAL_TYPE,
+            },
         ],
     },
     {
@@ -58,12 +64,6 @@ export const routes = [
     },
     {
         id: 5,
-        name: "Quản lý bữa ăn",
-        icon: "/manager/images/sun.png",
-        path: ROUTES.MEAL_TYPE,
-    },
-    {
-        id: 6,
         name: "Nhật ký thu ngân",
         icon: "/manager/images/blog.png",
         path: ROUTES.CASHIER_LOG,

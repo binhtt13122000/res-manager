@@ -49,6 +49,12 @@ const Menu: NextPage = () => {
         setData(data);
     };
     const deleteRowData = (rowData: MenuMutationType) => {
+        if (rowData.isdefault) {
+            showSnackbar({
+                children: "Không được xóa thực đơn mặc định!",
+                severity: "error",
+            });
+        }
         if (rowData.status === BASIC_ENUM.INACTIVE) {
             showSnackbar({
                 children: "Thực đơn này hiện đã ngừng hoạt động!",

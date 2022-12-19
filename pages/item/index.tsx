@@ -95,7 +95,7 @@ const Item: NextPage = () => {
         },
         {
             field: "majorgroup",
-            title: "Tên nhóm món ăn",
+            title: "Nhóm món ăn",
             index: 4,
             type: "object",
             subField: "name",

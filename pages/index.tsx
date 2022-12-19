@@ -374,7 +374,7 @@ const Home: NextPage = () => {
                                 noWrap
                                 pb={2}
                             >
-                                {"Tổng số khách mới"}
+                                {"Tổng số khách"}
                             </Typography>
                             <Typography
                                 component="h5"
