@@ -18,7 +18,7 @@ const CheckDetail: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            window.location.replace("https://binhtruongthanh.tech/login");
+            window.location.replace("https://capstoneposrestaurant.tech/login");
         }
     }, []);
     const router = useRouter();

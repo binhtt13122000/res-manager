@@ -15,7 +15,7 @@ const Menu: NextPage = () => {
     useEffect(() => {
         const userJson = localStorage.getItem("manager-user");
         if (!userJson) {
-            window.location.replace("https://binhtruongthanh.tech/login");
+            window.location.replace("https://capstoneposrestaurant.tech/login");
         }
     }, []);
     const initData: MenuMutationType = {
@@ -54,6 +54,7 @@ const Menu: NextPage = () => {
                 children: "Không được xóa thực đơn mặc định!",
                 severity: "error",
             });
+            return;
         }
         if (rowData.status === BASIC_ENUM.INACTIVE) {
             showSnackbar({

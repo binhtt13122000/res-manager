@@ -18,10 +18,10 @@ const Login: NextPageWithLayout = () => {
         const userJson = localStorage.getItem("manager-user");
         const userJson1 = localStorage.getItem("user");
         if (userJson) {
-            window.location.replace("https://binhtruongthanh.tech/manager/");
+            window.location.replace("https://capstoneposrestaurant.tech/manager/");
         }
         if (userJson1) {
-            window.location.replace("https://binhtruongthanh.tech/admin/account/");
+            window.location.replace("https://capstoneposrestaurant.tech/admin/account/");
         }
     }, []);
     const { mutate } = useLogin();
@@ -88,13 +88,13 @@ const Login: NextPageWithLayout = () => {
                                     ) {
                                         localStorage.setItem("manager-user", JSON.stringify(user));
                                         window.location.replace(
-                                            "https://binhtruongthanh.tech/manager/"
+                                            "https://capstoneposrestaurant.tech/manager/"
                                         );
                                     }
                                     if (user.account[0].role.name.toLocaleUpperCase() === "ADMIN") {
                                         localStorage.setItem("user", JSON.stringify(user));
                                         window.location.replace(
-                                            "https://binhtruongthanh.tech/admin/account/"
+                                            "https://capstoneposrestaurant.tech/admin/account/"
                                         );
                                     }
                                 },
